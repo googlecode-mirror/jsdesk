@@ -1,0 +1,4 @@
+ErrorDocument 404 /404.php
+
+# add php as default to remove need for extensions in links
+DefaultType application/x-httpd-php
