@@ -13,26 +13,9 @@ class desktop {
 		return addslashes($_COOKIE["key"]); // prevent sql injection attacks
 	} // end get_key()
 	
-
-	/* PUBLIC
-	 *
-	 * No return value
-	 */
-	function connect_to_db() {
-        //$sConn = @mysql_pconnect($GLOBALS['dbHost'], $GLOBALS['dbUser'], $GLOBALS['dbPass'])
-        //or die("Couldnt connect to database");
-        //
-        //$dbConn = @mysql_select_db($GLOBALS['dbName'], $GLOBALS['sConn'])
-        //or die("Couldnt select database $dbName");
-//		mysql_connect ($GLOBALS['dbhost'], $GLOBALS['dbUser'], $GLOBALS['dbPass']) or die ('I cannot connect to mysql because: ' . mysql_error());
-//		mysql_select_db ($GLOBALS['dbName']) or die ('I cannot select the database because: '.mysql_error());
-	} // end connect_to_db()
-	
-	
 	/* PUBLIC
 	 *
 	 * Requires get_key() method
-	 * Requires connect_to_db() method
 	 *
 	 * Returns boolean True/False
 	 */
@@ -42,9 +25,6 @@ class desktop {
 		
 		// get the random login key
 		$key = $this->get_key();
-		
-		// connect to db
-		$this->connect_to_db();
 		
 		// query the db for the login id
 		$sql = "select member_id from login where login_key = '".addslashes($key)."'";
@@ -59,7 +39,6 @@ class desktop {
 	
 	/* PUBLIC
 	 *
-	 * Requires the connect_to_db() method
 	 * Requires the get_key() method
 	 *
 	 * Returns id of member currently logged in
@@ -67,9 +46,6 @@ class desktop {
 	function get_member_id() {
 		// get the random login key
 		$key = $this->get_key();
-		
-		// connect to db
-		$this->connect_to_db();
 		
 		// query the db for the login id
 		if(mysql_num_rows($result = mysql_query("select member_id from login where login_key = '".$key."'")) > 0) {
@@ -86,7 +62,6 @@ class desktop {
 	
 	/* PUBLIC
 	 *
-	 * Requires the connect_to_db() method
 	 * Requires the get_key() method
 	 *
 	 * Returns id of member currently logged in
@@ -94,9 +69,6 @@ class desktop {
 	function get_member_name() {
 		// get the random login key
 		$key = $this->get_key();
-		
-		// connect to db
-		$this->connect_to_db();
 		
 		// get member id
 		$member_id = $this->get_member_id();
@@ -115,15 +87,12 @@ class desktop {
 	
 	/* PUBLIC
 	 *
-	 * Requires the connect_to_db() method
 	 * Requires the get_member_id() method
 	 *
 	 * Returns a string
 	 */
 	function get_member_type($member_id) {
-		// connect to db
-		$this->connect_to_db();
-		
+
 		// get the member id
 		if(!isset($member_id)) { $member_id = $this->get_member_id(); }
 		
@@ -163,8 +132,6 @@ class desktop {
 	
 	/* PUBLIC
 	 *
-	 * Requires connect_to_db() method
-	 *
 	 * Returns JSON data 
 	 */
 	function login($user, $pass) {
@@ -175,8 +142,6 @@ class desktop {
 		}elseif(!isset($pass)||!strlen($pass)){
 			$json = "{errors:[{id:'pass', msg:'Required Field'}]}";
 		}else {
-			// connect to db
-			$this->connect_to_db();
 				
 			// check username
 			$sql = "select member_id from members where member_username = '".$user."'";
