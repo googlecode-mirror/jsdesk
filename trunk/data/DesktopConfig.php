@@ -59,9 +59,9 @@ if(class_exists('desktop')){
 		if($result = mysql_query($sql)){
 			$row = mysql_fetch_assoc($result);
 			
-			$desktopcontextmenu = $row["desktopcontextmenu"] != "" ? $row["desktopcontextmenu"] : "[]";
-			$quickstart = $row["quickstart"] != "" ? $row["quickstart"] : "[]";
-			$startmenu = $row["startmenu"] != "" ? $row["startmenu"] : "[]";
+			$desktopcontextmenu = $row["desktopcontextmenu"] != "" ? $row["desktopcontextmenu"] : "['docs-win', 'preferences-win']";
+			$quickstart = $row["quickstart"] != "" ? $row["quickstart"] : "['grid-win','tab-win','acc-win','layout-win']";
+			$startmenu = $row["startmenu"] != "" ? $row["startmenu"] : "['docs-win','grid-win','tab-win','acc-win','layout-win','bogus-menu']";
 			
 			if(mysql_num_rows($result) > 1){ // get members preferences
 				$row = mysql_fetch_assoc($result);

@@ -1,8 +1,7 @@
 <?php
-class desktop
-{	
-	function desktop()
-	{
+include("inConfig.php");
+class desktop {
+	function desktop()	{
 	
 	}
 	
@@ -10,23 +9,24 @@ class desktop
 	 *
 	 * Intended for internal use
 	 */
-	function get_key()
-	{
-		return $_COOKIE["key"];
+	function get_key()	{
+		return addslashes($_COOKIE["key"]); // prevent sql injection attacks
 	} // end get_key()
 	
-	
-	
+
 	/* PUBLIC
 	 *
 	 * No return value
 	 */
-	function connect_to_db()
-	{
-		mysql_connect ("sql.shadowpuppet.net", "sqlsccc", "sccc123qwe") or die ('I cannot connect to mysql because: ' . mysql_error());
-		mysql_select_db ("dbsccc") or die ('I cannot select the database because: '.mysql_error());
+	function connect_to_db() {
+        //$sConn = @mysql_pconnect($GLOBALS['dbHost'], $GLOBALS['dbUser'], $GLOBALS['dbPass'])
+        //or die("Couldnt connect to database");
+        //
+        //$dbConn = @mysql_select_db($GLOBALS['dbName'], $GLOBALS['sConn'])
+        //or die("Couldnt select database $dbName");
+//		mysql_connect ($GLOBALS['dbhost'], $GLOBALS['dbUser'], $GLOBALS['dbPass']) or die ('I cannot connect to mysql because: ' . mysql_error());
+//		mysql_select_db ($GLOBALS['dbName']) or die ('I cannot select the database because: '.mysql_error());
 	} // end connect_to_db()
-	
 	
 	
 	/* PUBLIC
@@ -47,7 +47,7 @@ class desktop
 		$this->connect_to_db();
 		
 		// query the db for the login id
-		$sql = "select member_id from login where login_key = '".$key."'";
+		$sql = "select member_id from login where login_key = '".addslashes($key)."'";
 		
 		// if a record is found, they are logged in
 		if(mysql_num_rows($result = mysql_query($sql)) > 0) { $logged_in = true; }
@@ -64,8 +64,7 @@ class desktop
 	 *
 	 * Returns id of member currently logged in
 	 */
-	function get_member_id()
-	{
+	function get_member_id() {
 		// get the random login key
 		$key = $this->get_key();
 		
@@ -73,13 +72,10 @@ class desktop
 		$this->connect_to_db();
 		
 		// query the db for the login id
-		if(mysql_num_rows($result = mysql_query("select member_id from login where login_key = '".$key."'")) > 0)
-		{
+		if(mysql_num_rows($result = mysql_query("select member_id from login where login_key = '".$key."'")) > 0) {
 			$row = mysql_fetch_assoc($result);
 			$member_id = $row['member_id'];
-		}
-		else
-		{
+		} else {
 			$member_id = "";
 		}
 		
@@ -95,8 +91,7 @@ class desktop
 	 *
 	 * Returns id of member currently logged in
 	 */
-	function get_member_name()
-	{
+	function get_member_name() {
 		// get the random login key
 		$key = $this->get_key();
 		
@@ -107,13 +102,10 @@ class desktop
 		$member_id = $this->get_member_id();
 		
 		// query the db for the member name
-		if(mysql_num_rows($result = mysql_query("select member_first_name, member_last_name from members where member_id = '".$member_id."'")) > 0)
-		{
+		if(mysql_num_rows($result = mysql_query("select member_first_name, member_last_name from members where member_id = '".$member_id."'")) > 0) {
 			$row = mysql_fetch_assoc($result);
 			$member_name = $row['member_first_name']." ".$row['member_last_name'];
-		}
-		else
-		{
+		} else {
 			$member_name = "";
 		}
 		
@@ -128,8 +120,7 @@ class desktop
 	 *
 	 * Returns a string
 	 */
-	function get_member_type($member_id)
-	{
+	function get_member_type($member_id) {
 		// connect to db
 		$this->connect_to_db();
 		
@@ -137,13 +128,10 @@ class desktop
 		if(!isset($member_id)) { $member_id = $this->get_member_id(); }
 		
 		// query the db for the member type id
-		if(mysql_num_rows($result = mysql_query("select t2.type_text from members t1, member_types t2 where t1.member_id = ".$member_id." and t1.member_type = t2.type_id")) > 0)
-		{
+		if(mysql_num_rows($result = mysql_query("select t2.type_text from members t1, member_types t2 where t1.member_id = ".$member_id." and t1.member_type = t2.type_id")) > 0) {
 			$row = mysql_fetch_assoc($result);
 			$member_type = $row['type_text'];
-		}
-		else
-		{
+		} else {
 			$member_type = "";
 		}
 		
@@ -159,18 +147,14 @@ class desktop
 	 *
 	 * Returns boolean True/False
 	 */
-	function is_member_type($type_check)
-	{
+	function is_member_type($type_check) {
 		// get member type
 		$member_type = $this->get_member_type();
 		
 		// case-insensitive string comparison
-		if(strcasecmp($member_type, $type_check) == 0)
-		{
+		if(strcasecmp($member_type, $type_check) == 0) {
 			return true;
-		}
-		else
-		{
+		} else {
 			return false;
 		}		
 	} // end is_member_type()
@@ -183,29 +167,19 @@ class desktop
 	 *
 	 * Returns JSON data 
 	 */
-	function login($module, $user, $pass)
-	{
+	function login($user, $pass) {
 		$json = "";
-		
-		if(!isset($_POST['module'])||strlen($_POST['module'])<1)
-		{
-			die("Error: Server 1");
-		}
-		elseif(!isset($user)||!strlen($user))
-		{
+
+		if(!isset($user)||!strlen($user)) {
 			$json = "{errors:[{id:'user', msg:'Required Field'}]}";
-		}
-		elseif(!isset($pass)||!strlen($pass))
-		{
+		}elseif(!isset($pass)||!strlen($pass)){
 			$json = "{errors:[{id:'pass', msg:'Required Field'}]}";
-		}
-		else
-		{
+		}else {
 			// connect to db
 			$this->connect_to_db();
 				
 			// check username
-			$sql = "select member_id from members where member_email = '".$user."'";
+			$sql = "select member_id from members where member_username = '".$user."'";
 			if(mysql_num_rows(mysql_query($sql)) < 1)
 			{
 				$json = "{errors:[{id:'user', msg:'User not found'}]}";
@@ -213,7 +187,7 @@ class desktop
 			else
 			{
 				// check password
-				$sql = "select member_id, member_type, member_first_name, member_last_name, member_email from members where member_email = '".$user."' and member_password = '".$pass."'";
+				$sql = "select member_id, member_type, member_username, member_first_name, member_last_name, member_email from members where member_username = '".$user."' and member_password=aes_encrypt('".$pass."','".$GLOBALS['AES']."')";
 				if(mysql_num_rows($result = mysql_query($sql)) < 1)
 				{
 					$json = "{errors:[{id:'pass', msg:'Incorrect Password'}]}";
@@ -224,13 +198,12 @@ class desktop
 					$row = mysql_fetch_assoc($result);
 					$member_id = $row['member_id'];
 					$member_type = $row['member_type'];
+					$member_username = $row['member_username'];
 					$member_name = $row['member_first_name']." ".$row['member_last_name'];
-					
+
 					// delete existing login record, but not for demo login
-					if($member_type != 3){
-						$sql = "delete from login where member_id = ".$member_id;
-						if(!mysql_query($sql)) { $json = "{errors:[{id:'user', msg:'Login Failed'}]}"; }
-					}
+                    $sql = "delete from login where member_id = ".$member_id;
+                    if(!mysql_query($sql)) { $json = "{errors:[{id:'user', msg:'Login Failed'}]}"; }
 					
 					// get our random login key
 					$rand_key = $this->get_rand_key();
@@ -249,7 +222,7 @@ class desktop
 					
 					if(!mysql_query($sql)) { $json = "{errors:[{id:'user', msg:'Login Failed'}]}"; }
 					
-					$json = "{success:true, key:'".$rand_key."', name:'".$member_name."', type:'".$this->get_member_type($member_id)."'}\n";
+					$json = "{success:true, key:'".$rand_key."', username:'".$member_username."', name:'".$member_name."', type:'".$this->get_member_type($member_id)."'}\n";
 				}
 			}
 		}
@@ -265,11 +238,10 @@ class desktop
 	 *
 	 * Redirects to login.html on success
 	 */
-	function logout()
-	{
+	function logout() {
 		// get member id
 		$member_id = $this->get_member_id();
-			
+
 		// delete login from database
 		$sql = "delete from login where member_id = ".$member_id;
 		mysql_query($sql) or die ("Logout failed...");
@@ -278,8 +250,8 @@ class desktop
 		setcookie("key", "");
 		setcookie("memberName", "");
 		
-		// redirect to login page
-		header( 'Location: login.html' );
+		// redirect to main page
+		header( 'Location: /index.php' ); // TODO: Setup sync so that we don't have to redirect (just launch a new login/lockout dialog and update page content to fit anonymous user creds)
 	} // end logout()
 	
 	

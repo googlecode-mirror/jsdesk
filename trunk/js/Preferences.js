@@ -211,7 +211,7 @@ QSTree = function() {
     	showProgress();
 
         Ext.Ajax.request({
-            url: 'php/Preferences.php',
+            url: 'data/Preferences.php',
             params: {
                 quickstart: encIds
             },

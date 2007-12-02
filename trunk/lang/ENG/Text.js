@@ -13,7 +13,8 @@ var Text = {
         EmptyEmail: 'foo@bar.com',
         Password: 'Password',
         Password2: 'Password',
-        FullName: 'Full Name',
+        FirstName: 'First Name',
+        LastName: 'Last Name',
         RegPassword: 'Create Password',
         RegConfirmPassword: 'Confirm Password',
 		LoginDialogTitle: 'Restricted Access'
