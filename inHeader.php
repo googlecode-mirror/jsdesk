@@ -36,7 +36,7 @@ echo $cssCode;
 <script type="text/javascript" src="js/lib/Module.js"></script>
 
 <!-- LOGIN -->
-<script type="text/javascript" src="js/lib/cookies.js"></script>
+<script type="text/javascript" src="js/lib/Cookies.js"></script>
 <!--script type="text/javascript" src="js/ext/ux/Crypto/Ext.ux.Crypto.AES.js"></script-->
 <?
 function showLogin(){

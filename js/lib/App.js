@@ -17,24 +17,20 @@ Ext.app.App = function(cfg){
 };
 
 Ext.extend(Ext.app.App, Ext.util.Observable, {
-    isReady: false,
-    startMenu: null,
-    modules: null,
-
-    getStartConfig : function(){
-
-    },
+    isReady : false,
+    modules : null, // Array of objects.  All initialized desktop modules
+    startMenu : null,
+	desktopConfig : null,
 
     initApp : function(){
     	this.startConfig = this.startConfig || this.getStartConfig();
-
         this.desktop = new Ext.Desktop(this);
-
-		this.launcher = this.desktop.taskbar.startMenu;
+		this.startMenu = this.desktop.taskbar.startMenu;
 
 		this.modules = this.getModules();
         if(this.modules){
             this.initModules(this.modules);
+            this.initDesktopConfig();
         }
 
         this.init();
@@ -44,15 +40,72 @@ Ext.extend(Ext.app.App, Ext.util.Observable, {
         this.isReady = true;
     },
 
-    getModules : Ext.emptyFn,
+	getModules : Ext.emptyFn,
+    getStartConfig : Ext.emptyFn,
+	getDesktopConfig : Ext.emptyFn,
     init : Ext.emptyFn,
 
     initModules : function(ms){
 		for(var i = 0, len = ms.length; i < len; i++){
-            var m = ms[i];
-            this.launcher.add(m.launcher);
-            m.app = this;
+            ms[i].app = this;
         }
+    },
+
+    initDesktopConfig : function(o){
+    	if(!o){
+			this.getDesktopConfig();
+		}else{
+			this.desktopConfig = o;
+			this.initDesktopContextMenu(o.desktopcontextmenu);
+			this.initStartMenu(o.startmenu);
+	        this.initQuickStart(o.quickstart);
+		}
+    },
+
+    initDesktopContextMenu : function(mIds){
+    	if(mIds){
+    		for(var i = 0, len = mIds.length; i < len; i++){
+	            var m = this.getModule(mIds[i]);
+	            if(m){
+		            if(m.appType == 'menu'){ // handle menu modules
+		            	var items = m.items;
+		            	for(var i = 0, len = items.length; i < len; i++){
+		            		m.launcher.menu.items.push(this.getModule(items[i]).launcher);
+		            	}
+		            }
+		            this.desktop.cmenu.add(m.launcher);
+				}
+	        }
+    	}
+    },
+
+    initStartMenu : function(mIds){
+    	if(mIds){
+    		for(var i = 0, iLen = mIds.length; i < iLen; i++){
+				var m = this.getModule(mIds[i]);
+	            if(m){
+		            if(m.appType == 'menu'){ // handle menu modules
+		            	var items = m.items;
+
+		            	for(var j = 0, jLen = items.length; j < jLen; j++){
+		            		m.launcher.menu.items.push(this.getModule(items[j]).launcher);
+		            	}
+		            }
+		            this.startMenu.add(m.launcher);
+				}
+	        }
+		}
+    },
+
+	initQuickStart : function(mIds){
+		if(mIds){
+			for(var i = 0, len = mIds.length; i < len; i++){
+	            var m = this.getModule(mIds[i]);
+	            if(m){
+	            	m.quickStartButton = this.desktop.taskbar.addQuickStartButton(m.launcher);
+				}
+	        }
+		}
     },
 
     getModule : function(name){
@@ -63,6 +116,21 @@ Ext.extend(Ext.app.App, Ext.util.Observable, {
 			}
         }
         return '';
+    },
+
+    addQuickStartButton : function(id){
+    	var m = this.getModule(id);
+		if(m && !m.quickStartButton){
+			m.quickStartButton = this.desktop.taskbar.addQuickStartButton(m.launcher);
+		}
+    },
+
+    removeQuickStartButton : function(id){
+    	var m = this.getModule(id);
+		if(m && m.quickStartButton){
+			this.desktop.taskbar.removeQuickStartButton(m.quickStartButton);
+			m.quickStartButton = null;
+		}
     },
 
     onReady : function(fn, scope){

@@ -208,6 +208,8 @@ QSTree = function() {
         var encIds = Ext.encode(this.app.desktopConfig.quickstart);
     	//console.log(encIds);
 
+    	showProgress();
+
         Ext.Ajax.request({
             url: 'php/Preferences.php',
             params: {
@@ -217,16 +219,28 @@ QSTree = function() {
                 if (Ext.decode(o.responseText.success)) {
 
                 } else {
-                    Ext.MessageBox.alert('Error', 'Code not finished yet.');
+					Ext.MessageBox.hide();
+					Ext.MessageBox.alert('Error', 'Errors encountered on the server.');
                 }
-				//endProgressIndicator(count > 1 ? rCount+' messages deleted.' : '1 message deleted.');
             },
             failure: function() {
-                Ext.MessageBox.alert('Error', 'Errors occured at the server.');
+				Ext.MessageBox.hide();
+				Ext.MessageBox.alert('Error', 'Lost connection to server.');
             },
             scope: this
         });
     }
+
+    function showProgress(){
+    	Ext.MessageBox.show({
+           msg: 'Saving your data, please wait...',
+           progressText: 'Saving...',
+           width:300,
+           wait:true,
+           waitConfig: {interval:200},
+           icon:'desktop-download'
+       });
+	}
 
     return {
         app : null,

@@ -80,9 +80,7 @@ MyDesktop = new Ext.app.App({
                   'layout-win',
                   'bogus-menu'
               ]
-          }
-          this.initDesktopConfig(o);
-          */
+		}); */
     }
 });
 

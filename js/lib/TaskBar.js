@@ -1,10 +1,4 @@
-/*
- * Ext JS Library 2.0 Beta 1
- * Copyright(c) 2006-2007, Ext JS, LLC.
- * licensing@extjs.com
- * 
- * http://extjs.com/license
- */
+Ext.namespace("Ext.ux");
 
 /**
  * @class Ext.ux.TaskBar
@@ -28,26 +22,34 @@ Ext.extend(Ext.ux.TaskBar, Ext.util.Observable, {
 		this.startBtn = new Ext.Button({
             text: 'Start',
             id: 'ux-startbutton',
-            iconCls:'start',
+            iconCls: 'start',
             menu: this.startMenu,
             menuAlign: 'bl-tl',
             renderTo: 'ux-taskbar-start',
-            clickEvent:'mousedown',
             template: new Ext.Template(
 				'<table border="0" cellpadding="0" cellspacing="0" class="x-btn-wrap"><tbody><tr>',
 				'<td class="ux-startbutton-left"><i>&#160;</i></td><td class="ux-startbutton-center"><em unselectable="on"><button class="x-btn-text" type="{1}" style="height:30px;">{0}</button></em></td><td class="ux-startbutton-right"><i>&#160;</i></td>',
-				"</tr></tbody></table>")
+				'</tr></tbody></table>')
         });
         
-        var width = Ext.get('ux-startbutton').getWidth()+10;
+        var startWidth = Ext.get('ux-startbutton').getWidth() + 10;
         
         var sbBox = new Ext.BoxComponent({
 			el: 'ux-taskbar-start',
 	        id: 'TaskBarStart',
-	        minWidth: width,
+	        minWidth: startWidth,
+			region:'west',
+			split: false,
+			width: startWidth
+		});
+
+		this.qsPanel = new Ext.ux.QuickStartPanel({
+			el: 'ux-quickstart-panel',
+	        id: 'TaskBarQuickStart',
+	        minWidth: 60,
 			region:'west',
 			split: true,
-			width: width
+			width: 94
 		});
 		
 		this.tbPanel = new Ext.ux.TaskButtonsPanel({
@@ -55,11 +57,18 @@ Ext.extend(Ext.ux.TaskBar, Ext.util.Observable, {
 			id: 'TaskBarButtons',
 			region:'center'
 		});
-				
+
+		var panelWrap = new Ext.Container({
+			el: 'ux-taskbar-panel-wrap',
+			items: [this.qsPanel,this.tbPanel],
+			layout: 'border',
+			region: 'center'
+		});
+
         var container = new Ext.ux.TaskBarContainer({
 			el: 'ux-taskbar',
 			layout: 'border',
-			items: [sbBox,this.tbPanel]
+			items: [sbBox,panelWrap]
 		});
 		
 		return this;
@@ -75,6 +84,14 @@ Ext.extend(Ext.ux.TaskBar, Ext.util.Observable, {
 	
 	setActiveButton : function(btn){
 		this.tbPanel.setActiveButton(btn);
+	},
+
+	addQuickStartButton : function(config){
+		return this.qsPanel.addButton(config, 'ux-quickstart-panel');
+	},
+
+	removeQuickStartButton : function(btn){
+		this.qsPanel.removeButton(btn);
 	}
 });
 
@@ -463,4 +480,198 @@ Ext.extend(Ext.ux.TaskBar.TaskButton, Ext.Button, {
 		}
 		win.close();
 	}
+});
+
+
+
+/**
+ * @class Ext.ux.QuickStartPanel
+ * @extends Ext.BoxComponent
+ */
+Ext.ux.QuickStartPanel = Ext.extend(Ext.BoxComponent, {
+	enableMenu: true,
+
+	initComponent : function(){
+        Ext.ux.QuickStartPanel.superclass.initComponent.call(this);
+
+        this.on('resize', this.delegateUpdates);
+
+        this.menu = new Ext.menu.Menu();
+
+        this.items = [];
+
+        this.stripWrap = Ext.get(this.el).createChild({
+        	cls: 'ux-quickstart-strip-wrap',
+        	cn: {
+            	tag:'ul', cls:'ux-quickstart-strip'
+            }
+		});
+
+        this.stripSpacer = Ext.get(this.el).createChild({
+        	cls:'ux-quickstart-strip-spacer'
+        });
+
+        this.strip = new Ext.Element(this.stripWrap.dom.firstChild);
+
+        this.edge = this.strip.createChild({
+        	tag:'li',
+        	cls:'ux-quickstart-edge'
+        });
+
+        this.strip.createChild({
+        	cls:'x-clear'
+        });
+	},
+
+	addButton : function(config){
+		var li = this.strip.createChild({tag:'li'}, this.edge); // insert before the edge
+
+		var btn = new Ext.Button(Ext.apply(config, {
+			cls:'x-btn-icon',
+			menuText: config.text,
+			renderTo: li,
+			template: new Ext.Template(
+				'<table border="0" cellpadding="0" cellspacing="0" class="x-btn-wrap"><tbody><tr>',
+				'<td class="ux-quickstart-button-left"><i>&#160;</i></td><td class="ux-quickstart-button-center"><em unselectable="on"><button class="x-btn-text" type="{1}" style="height:28px;"></button></em></td><td class="ux-quickstart-button-right"><i>&#160;</i></td>',
+				'</tr></tbody></table>'),
+			text: config.text
+		}));
+
+		this.items.push(btn);
+
+		this.delegateUpdates();
+
+		return btn;
+	},
+
+	removeButton : function(btn){
+		var li = document.getElementById(btn.container.id);
+		btn.destroy();
+		li.parentNode.removeChild(li);
+
+		var s = [];
+		for(var i = 0, len = this.items.length; i < len; i++) {
+			if(this.items[i] != btn){
+				s.push(this.items[i]);
+			}
+		}
+		this.items = s;
+
+		this.delegateUpdates();
+	},
+
+	menuAdd : function(config){
+		this.menu.add(config);
+	},
+
+	delegateUpdates : function(){
+        if(this.enableMenu && this.rendered){
+        	this.showButtons();
+        	this.clearMenu();
+            this.autoMenu();
+        }
+    },
+
+    showButtons : function(){
+    	var count = this.items.length;
+
+    	for(var i = 0; i < count; i++){
+			this.items[i].show();
+		}
+    },
+
+    clearMenu : function(){
+    	this.menu.removeAll();
+    },
+
+	autoMenu : function(){
+    	var count = this.items.length;
+        var ow = this.el.dom.offsetWidth;
+        var tw = this.el.dom.clientWidth;
+
+        var wrap = this.stripWrap;
+        var cw = wrap.dom.offsetWidth;
+       	var l = this.edge.getOffsetsTo(this.stripWrap)[0];
+
+        if(!this.enableMenu || count < 1 || cw < 20){ // 20 to prevent display:none issues
+            return;
+        }
+
+        wrap.setWidth(tw);
+
+        if(l <= tw){
+            if(this.showingMenu){
+                this.showingMenu = false;
+                this.menuButton.hide();
+            }
+        }else{
+        	tw -= wrap.getMargins('lr');
+
+            wrap.setWidth(tw > 20 ? tw : 20);
+
+            if(!this.showingMenu){
+                if(!this.menuButton){
+                    this.createMenuButton();
+                }else{
+                    this.menuButton.show();
+                }
+            }
+
+            mo = this.getMenuButtonPos();
+
+            for(var i = count-1; i >= 0; i--){
+            	var bo = this.items[i].el.dom.offsetLeft + this.items[i].el.dom.offsetWidth;
+
+            	if(bo > mo){
+            		this.items[i].hide();
+
+            		var ic = this.items[i].initialConfig,
+            			config = {
+	            			iconCls: ic.iconCls,
+	            			handler: ic.handler,
+	            			scope: ic.scope,
+	            			text: ic.menuText
+	            		};
+
+            		this.menuAdd(config);
+            	}else{
+            		this.items[i].show();
+            	}
+            }
+
+            this.showingMenu = true;
+        }
+    },
+
+    createMenuButton : function(){
+
+       	var h = this.el.dom.offsetHeight;
+
+        var mb = this.el.insertFirst({
+            cls:'ux-quickstart-menubutton-wrap'
+        });
+
+        mb.setHeight(h);
+
+        var btn = new Ext.Button({
+        	cls:'x-btn-icon',
+        	iconCls: 'quickstart-menubutton',
+        	id: 'ux-quickstart-menubutton',
+        	menu: this.menu,
+        	renderTo: mb,
+            template: new Ext.Template(
+            	'<table border="0" cellpadding="0" cellspacing="0" class="x-btn-wrap"><tbody><tr>',
+				'<td class="ux-quickstart-button-left"><i>&#160;</i></td><td class="ux-quickstart-button-center"><em unselectable="on"><button class="x-btn-text" type="{1}" style="height:28px;">{0}</button></em></td><td class="ux-quickstart-button-right"><i>&#160;</i></td>',
+				'</tr></tbody></table>'
+            )
+        });
+
+        mb.setWidth(Ext.get('ux-quickstart-menubutton').getWidth());
+
+        this.menuButton = mb;
+    },
+
+    getMenuButtonPos : function(){
+    	return this.menuButton.dom.offsetLeft;
+    }
 });
