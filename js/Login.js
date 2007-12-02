@@ -1,8 +1,10 @@
+Ext.SSL_SECURE_URL="css/images/s.gif";
+Ext.BLANK_IMAGE_URL="css/images/s.gif";
+
 LoginDialog = Ext.extend(Ext.app.Module, {
     init : function() {
         var loginForm = new Ext.form.FormPanel({
             labelWidth: 75, // label settings here cascade unless overridden
-        //			url:'login.php',
             frame:true,
             defaultType: 'textfield',
         //autoHeight:true,
@@ -13,14 +15,14 @@ LoginDialog = Ext.extend(Ext.app.Module, {
             },
             width: 300,
             items: [{
-                fieldLabel: '<b>' + Text.Lbl.UserName + '</b>',
+                fieldLabel: '<b>' + (Text.Lbl.UserName || 'Username') + '</b>',
                 name: 'UserName',
                 id: 'UserName',
                 tabIndex:1,
                 anchor:'90%'
             },{
                 inputType:'password',
-                fieldLabel: '<b>' + Text.Lbl.Password + '</b>',
+                fieldLabel: '<b>' + (Text.Lbl.Password || 'Password') + '</b>',
                 name: 'Password',
                 id: 'Password',
                 tabIndex:2,
@@ -39,16 +41,16 @@ LoginDialog = Ext.extend(Ext.app.Module, {
                     form.submit({
                         waitTitle: "Please Wait...",
                         waitMsg: "Logging in...",
-                        url: 'login/',
+                        url: 'data/login.php',
                         method: 'POST',
                         success: function (f, a) {
                             if (a && a.result) {
                                 win.destroy(true); // close dialog
-                                Ext.get('ext-gen15').hide(); // not sure why this mask from the waitMsg lingers :(
                                 // set the cookie
-                                //								set_cookie('key', a.result.key, '', '/desktop-demo/', '', '' );
-                                //								set_cookie('memberName', a.result.name, '', '/desktop-demo/', '', '' );
-                                //								set_cookie('memberType', a.result.type, '', '/desktop-demo/', '', '' );
+                                set_cookie('key', a.result.key, 30, '/', '', '' );
+                                set_cookie('memberName', a.result.name, 30, '/', '', '' );
+                                set_cookie('memberType', a.result.type, 30, '/', '', '' );
+                                Ext.get('ext-gen15').hide(); // not sure why this mask from the waitMsg lingers :(
                             }
                         },
                         failure: function (f, a) {
@@ -75,7 +77,8 @@ LoginDialog = Ext.extend(Ext.app.Module, {
                         var Password = form.findField('Password');
                         var Password2 = Ext.get('Password2');
                         var Email = Ext.get('Email');
-                        var FullName = Ext.get('Email');
+                        var FirstName = Ext.get('FirstName');
+                        var LastName = Ext.get('LastName');
                         if (UserName.getValue() == '') {
                             Password.focus();
                             form.findField('UserName').focus(); // steal focus to activate validation
@@ -89,10 +92,14 @@ LoginDialog = Ext.extend(Ext.app.Module, {
                             Email.focus();
                             form.findField('UserName').focus();
                             Email.focus();
-                        } else if (FullName.dom.value == '') {
-                            FullName.focus();
+                        } else if (FirstName.dom.value == '') {
+                            FirstName.focus();
                             form.findField('UserName').focus();
-                            FullName.focus();
+                            FirstName.focus();
+                        } else if (LastName.dom.value == '') {
+                            LastName.focus();
+                            form.findField('UserName').focus();
+                            LastName.focus();
                         } else {
                             //							var cryptpass = Ext.ux.Crypto.AES.encrypt(Password.getValue(), UserName.getValue(), 256); // encrypt using username as key
                             //							Password.setValue(cryptpass);
@@ -107,9 +114,9 @@ LoginDialog = Ext.extend(Ext.app.Module, {
                                         win.destroy(true); // close dialog
                                         Ext.get('ext-gen15').hide(); // not sure why this mask from the waitMsg lingers :(
                                         // set the cookie
-                                        //										set_cookie('key', a.result.key, '', '/desktop-demo/', '', '' );
-                                        //										set_cookie('memberName', a.result.name, '', '/desktop-demo/', '', '' );
-                                        //										set_cookie('memberType', a.result.type, '', '/desktop-demo/', '', '' );
+                                        set_cookie('key', a.result.key, 30, '/', '', '' );
+                                        set_cookie('memberName', a.result.name, 30, '/', '', '' );
+                                        set_cookie('memberType', a.result.type, 30, '/', '', '' );
                                         // redirect the window
                                         //										window.location = "/desktop-demo/";
                                         //Ext.MessageBox.alert('Thanks', 'Your account has been created and are now logged in 8^]');
@@ -134,7 +141,7 @@ LoginDialog = Ext.extend(Ext.app.Module, {
                     this.el.dom.innerHTML = this.el.dom.innerHTML.replace(Text.Btn.NoAccount, Text.Btn.Register);
                     loginForm.add({
                         inputType:'password',
-                        fieldLabel: '<b>' + Text.Lbl.Password + '</b>',
+                        fieldLabel: '<b>' + (Text.Lbl.Password || 'Password') + '</b>',
                         name: 'Password2',
                         id: 'Password2',
                         vtype:'passwordConfirm',
@@ -142,7 +149,7 @@ LoginDialog = Ext.extend(Ext.app.Module, {
 
                         anchor:'90%'
                     }, {
-                        fieldLabel: '<b>' + Text.Lbl.Email + '</b>',
+                        fieldLabel: '<b>' + (Text.Lbl.Email || 'Email') + '</b>',
                         emptyText:Text.Lbl.EmptyEmail,
                         name: 'Email',
                         id: 'Email',
@@ -150,20 +157,19 @@ LoginDialog = Ext.extend(Ext.app.Module, {
                         vtype:'email',
                         anchor:'90%'
                     }, {
-                        fieldLabel: '<b>' + Text.Lbl.FullName + '</b>',
-                        name: 'FullName',
-                        id: 'FullName',
+                        fieldLabel: '<b>' + (Text.Lbl.FirstName || 'First Name') + '</b>',
+                        name: 'FirstName',
+                        id: 'FirstName',
                         tabIndex:5,
                         anchor:'90%'
-                    //					},{ // course selector
-                    ////						xtype:'textfield',
-                    //						fieldLabel: '<b>'+Text.Lbl.Classes+'</b>',
-                    //						name: 'Classes',
-                    //						allowBlank:false,
-                    //						tabIndex:6,
-                    //						anchor:'90%'
+                    },{
+                        fieldLabel: '<b>' + (Text.Lbl.LastName || 'Last Name') + '</b>',
+                        name: 'LastName',
+                        id: 'LastName',
+                        tabIndex:6,
+                        anchor:'90%'
                     });
-                    win.setHeight(230);
+                    win.setHeight(260);
                     win.center();
                 }
             }]

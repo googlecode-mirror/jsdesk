@@ -34,7 +34,7 @@ MyDesktop = new Ext.app.App({
                 text:'Logout',
                 iconCls:'logout',
                 handler:function() {
-                    window.location = "logout/";
+                    window.location = "data/logout.php";
                 },
                 scope:this
             }],
