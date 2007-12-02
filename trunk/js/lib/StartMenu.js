@@ -1,11 +1,3 @@
-/*
- * Ext JS Library 2.0 Beta 1
- * Copyright(c) 2006-2007, Ext JS, LLC.
- * licensing@extjs.com
- * 
- * http://extjs.com/license
- */
-
 /**
  * @class Ext.ux.StartMenu
  * @extends Ext.menu.Menu
@@ -53,6 +45,10 @@ Ext.ux.StartMenu = function(config){
 };
 
 Ext.extend(Ext.ux.StartMenu, Ext.menu.Menu, {
+	height : 300,
+	toolPanelWidth : 100,
+	width : 300,
+
     // private
     render : function(){
         if(this.el){
@@ -87,13 +83,13 @@ Ext.extend(Ext.ux.StartMenu, Ext.menu.Menu, {
 		
 		this.menuBWrap = el.createChild({
 			tag: "div",
-			cls: "x-window-body x-border-layout-ct ux-start-menu-body"
+			cls: "ux-start-menu-body x-border-layout-ct ux-start-menu-body"
 		});
 		var ml = this.menuBWrap.wrap({
 			cls: "ux-start-menu-ml"
 		});
 		var mc = this.menuBWrap.wrap({
-			cls: "x-window-mc ux-start-menu-bwrap"
+			cls: "ux-start-menu-mc ux-start-menu-bwrap"
 		});
 		
 		this.menuPanel = this.menuBWrap.createChild({
@@ -229,7 +225,7 @@ Ext.extend(Ext.ux.StartMenu, Ext.menu.Menu, {
         this.fireEvent("beforeshow", this);
         this.showAt(this.el.getAlignToXY(el, pos || this.defaultAlign), parentMenu, false);
         
-        var tPanelWidth = 100;      
+        var tPanelWidth = this.toolPanelWidth;
         var box = this.menuBWrap.getBox();
         this.menuPanel.setWidth(box.width-tPanelWidth);
         this.menuPanel.setHeight(box.height);

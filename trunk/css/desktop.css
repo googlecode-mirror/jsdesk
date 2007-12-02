@@ -907,11 +907,10 @@ td.ux-taskButtons-edge {
 #x-shortcuts dt a:hover {
     text-decoration:underline;
 }
+
 /*
  * shortcuts
  */
-
-
 
 #grid-win-shortcut img {
     width:48px;
@@ -924,4 +923,21 @@ td.ux-taskButtons-edge {
     height:48px;
     background-image: url(images/im48x48.png);
     filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='css/images/im48x48.png', sizingMethod='scale');
+}
+
+/*
+ * Message Box
+ */
+
+.x-window-dlg .desktop-download {
+	background:transparent url(images/icons/download.gif) no-repeat top left;
+	height:46px;
+}
+.x-window-dlg .x-window-mc {
+	border:1px solid #888 !important;
+}
+.x-window-dlg .x-window-body {
+	background:#575757 none !important;
+	border:1px solid #333 !important;
+	color:#ccc;
 }

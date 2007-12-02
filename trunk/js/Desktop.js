@@ -14,6 +14,7 @@
 Ext.BLANK_IMAGE_URL = 'css/images/s.gif';
 
 
+
 Ext.Desktop = function(app) {
     this.taskbar = new Ext.ux.TaskBar(app);
     var taskbar = this.taskbar;
