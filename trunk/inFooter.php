@@ -5,8 +5,6 @@
 </div>
 <?php
 //echo '<script language="JavaScript" src="scripts/runSpool.js"></script>';
-include("/home/lendren/shadowpuppet.net/dbase/statAddUser.php");
-include("/home/lendren/shadowpuppet.net/dbase/UsersOnline.php");
 //echo '<p><span class="copy">&copy; '.date('Y').' '.$txtFoot.'</span></p>';
 ?>
 </body>
