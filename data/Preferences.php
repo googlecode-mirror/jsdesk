@@ -7,9 +7,6 @@ require_once("desktop.php");
 if(class_exists('desktop')){
 	$desktop = new desktop();
 	
-	// connect to data
-	$desktop->connect_to_db();
-	
 	// get member id
 	$member_id = $desktop->get_member_id();
 	
