@@ -30,3 +30,11 @@
 #loading-mask{
 	width:100%;height:100%;background:#c3daf9;position:absolute;z-index:13998;left:0;top:0;
 }
+
+.x-window-plain .x-window-body {
+    padding: 0 0 10px 0;
+}
+
+#loginPanel,#registerPanel{
+    margin: 10px 10px 0 15px;
+}

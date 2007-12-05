@@ -1,5 +1,6 @@
 var Text = {
     Btn: {
+        Cancel: 'Cancel',
         Login: 'Login',
         NoAccount: 'Create Account',
         Register: 'Register',
