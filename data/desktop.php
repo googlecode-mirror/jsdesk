@@ -52,6 +52,7 @@ class desktop {
 			$row = mysql_fetch_assoc($result);
 			$member_id = $row['member_id'];
 		} else {
+//			$member_id = "no memberid, key=".$key;
 			$member_id = "";
 		}
 		
@@ -209,7 +210,8 @@ class desktop {
 
 		// delete login from database
 		$sql = "delete from login where member_id = ".$member_id;
-		mysql_query($sql) or die ("Logout failed...");
+		mysql_query($sql);// or die ($member_id." Logout failed...");
+		// if no valid key, logout, clear and redirect anyway
 		
 		// clear the cookie
 		setcookie("key", "");
