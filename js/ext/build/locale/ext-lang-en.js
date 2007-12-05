@@ -42,6 +42,10 @@ Date.monthNames = [
   "December"
 ];
 
+Date.getShortMonthName = function(month) {
+  return Date.monthNames[month].substring(0, 3);
+};
+
 Date.monthNumbers = {
   Jan : 0,
   Feb : 1,
@@ -57,6 +61,10 @@ Date.monthNumbers = {
   Dec : 11
 };
 
+Date.getMonthNumber = function(name) {
+  return Date.monthNumbers[name.substring(0, 1).toUpperCase() + name.substring(1, 3).toLowerCase()];
+};
+
 Date.dayNames = [
   "Sunday",
   "Monday",
@@ -66,6 +74,10 @@ Date.dayNames = [
   "Friday",
   "Saturday"
 ];
+
+Date.getShortDayName = function(day) {
+  return Date.dayNames[day].substring(0, 3);
+};
 
 if(Ext.MessageBox){
   Ext.MessageBox.buttonText = {
@@ -143,7 +155,8 @@ if(Ext.form.DateField){
     minText           : "The date in this field must be after {0}",
     maxText           : "The date in this field must be before {0}",
     invalidText       : "{0} is not a valid date - it must be in the format {1}",
-    format            : "m/d/y"
+    format            : "m/d/y",
+    altFormats        : "m/d/Y|m-d-y|m-d-Y|m/d|m-d|md|mdy|mdY|d|Y-m-d"
   });
 }
 
@@ -251,6 +264,14 @@ if(Ext.grid.GridView){
   });
 }
 
+if(Ext.grid.GroupingView){
+  Ext.apply(Ext.grid.GroupingView.prototype, {
+    emptyGroupText : '(None)',
+    groupByText    : 'Group By This Field',
+    showGroupsText : 'Show in Groups'
+  });
+}
+
 if(Ext.grid.PropertyColumnModel){
   Ext.apply(Ext.grid.PropertyColumnModel.prototype, {
     nameText   : "Name",
@@ -259,8 +280,8 @@ if(Ext.grid.PropertyColumnModel){
   });
 }
 
-if(Ext.SplitLayoutRegion){
-  Ext.apply(Ext.SplitLayoutRegion.prototype, {
+if(Ext.layout.BorderLayout.SplitRegion){
+  Ext.apply(Ext.layout.BorderLayout.SplitRegion.prototype, {
     splitTip            : "Drag to resize.",
     collapsibleSplitTip : "Drag to resize. Double click to hide."
   });
