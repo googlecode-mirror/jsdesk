@@ -125,7 +125,8 @@ if(Ext.form.DateField){
       minText           : "The date in this field must be after {0}",
       maxText           : "The date in this field must be before {0}",
       invalidText       : "{0} is not a valid date - it must be in the format {1}",
-      format            : "d/m/y"
+      format            : "d/m/y",
+      altFormats        : "d/m/Y|d-m-y|d-m-Y|d/m|d-m|dm|dmy|dmY|d|Y-m-d"
    });
 }
 
@@ -163,8 +164,8 @@ if(Ext.grid.PropertyColumnModel){
    });
 }
 
-if(Ext.SplitLayoutRegion){
-   Ext.apply(Ext.SplitLayoutRegion.prototype, {
+if(Ext.layout.BorderLayout.SplitRegion){
+   Ext.apply(Ext.layout.BorderLayout.SplitRegion.prototype, {
       splitTip            : "Drag to resize.",
       collapsibleSplitTip : "Drag to resize. Double click to hide."
    });
