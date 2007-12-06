@@ -36,7 +36,7 @@ echo '<title>'.$txtTitlePrefix.' | Desktop | '.$txtTitleSuffix.'</title>';
 <link rel="stylesheet" type="text/css" href="css/desktop.css" />
 <link rel="stylesheet" type="text/css" href="css/vista-black/styles.css" />
 <script type="text/javascript" src="lang/ENG/Text.js"></script>
-<script type="text/javascript" src="js/Module.js"></script>
+<script type="text/javascript" src="js/lib/Module.js"></script>
 
 <?
 function showLogin(){
@@ -57,10 +57,10 @@ if(!class_exists('desktop')) {
 ?>
 
 <!-- DESKTOP -->
-<script type="text/javascript" src="js/StartMenu.js"></script>
-<script type="text/javascript" src="js/TaskBar.js"></script>
-<script type="text/javascript" src="js/Desktop.js"></script>
-<script type="text/javascript" src="js/App.js"></script>
+<script type="text/javascript" src="js/lib/StartMenu.js"></script>
+<script type="text/javascript" src="js/lib/TaskBar.js"></script>
+<script type="text/javascript" src="js/lib/Desktop.js"></script>
+<script type="text/javascript" src="js/lib/App.js"></script>
 
 <!-- PLUGINS / APPS -->
 <script type="text/javascript" src="plugins/layout-window/js/plugin.js"></script>
