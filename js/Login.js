@@ -191,12 +191,17 @@ Login = function() {
                     registerPanel.show();
                     loginPanel.hide();
 
+                    var u = form.findField('UserName').getValue();
+                    var p = form.findField('Password').getValue();
                     btnLogin.hide();
                     this.hide();
                     btnCancel.show();
                     btnRegister.show();
 
                     form = registerPanel.getForm();
+                    form.findField('UserName').setValue(u);
+                    form.findField('Password').setValue(p);
+
                     dialog.setHeight(240);
                     dialog.center();
                 }
