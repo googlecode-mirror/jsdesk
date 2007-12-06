@@ -59,7 +59,7 @@ if(!class_exists('desktop')) {
 <!-- DESKTOP -->
 <script type="text/javascript" src="js/lib/StartMenu.js"></script>
 <script type="text/javascript" src="js/lib/TaskBar.js"></script>
-<script type="text/javascript" src="js/lib/Desktop.js"></script>
+<script type="text/javascript" src="js/Desktop.js"></script>
 <script type="text/javascript" src="js/lib/App.js"></script>
 
 <!-- PLUGINS / APPS -->
