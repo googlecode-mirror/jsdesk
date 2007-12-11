@@ -45,19 +45,6 @@ Login = function() {
             //                region: 'center'
             //            });
 
-            var fUserName = new Ext.form.TextField({
-                fieldLabel: '<b>' + (Text.Lbl.UserName || 'User') + '</b>',
-                name: 'UserName',
-                tabIndex:1,
-                anchor:'90%'
-            });
-            var fPassword = new Ext.form.TextField({
-                inputType:'password',
-                fieldLabel: '<b>' + (Text.Lbl.Password || 'Pass') + '</b>',
-                name: 'Password',
-                tabIndex:2,
-                anchor:'90%'
-            });
             var loginPanel = new Ext.form.FormPanel({
                 baseCls: 'x-plain',
                 baseParams: {
