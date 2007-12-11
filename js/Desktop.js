@@ -132,6 +132,52 @@ Ext.Desktop = function(app) {
         Ext.get('loading-mask').fadeOut({remove:true});
     }, 250);
 
+    this.setBackgroundColor = function(hex){
+		if(hex){
+			Ext.get(document.body).setStyle('background-color', '#' + hex);
+			app.desktopConfig.backgroundcolor = hex;
+		}
+	}
+
+    this.setTransparency = function(b){
+		if(String(b) != ""){
+			if(b){
+				taskbarEl.addClass("transparency");
+			}else{
+				taskbarEl.removeClass("transparency");
+			}
+			app.desktopConfig.styles.transparency = b
+		}
+	}
+
+	this.setWallpaper = function(imgName){
+		Ext.MessageBox.show({
+			msg: 'Loading wallpaper...',
+			progressText: 'Loading...',
+			width:300,
+			wait:true,
+			waitConfig: {interval:500}
+		});
+
+		var newImg = new Image();
+		newImg.src = "wallpapers/" + imgName;
+
+		var task = new Ext.util.DelayedTask(verifyImg);
+		task.delay(200);
+
+		function verifyImg(){
+			if(newImg.complete){
+				Ext.MessageBox.hide();
+				task.cancel();
+				window.document.body.background = "wallpapers/" + imgName;
+			}else{
+				task.delay(200);
+			}
+		}
+
+		app.desktopConfig.wallpaper = imgName;
+	}
+
     layout();
 
     if (shortcuts) {

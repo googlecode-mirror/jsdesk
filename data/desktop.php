@@ -27,7 +27,7 @@ class desktop {
 		$key = $this->get_key();
 		
 		// query the db for the login id
-		$sql = "select member_id from login where login_key = '".addslashes($key)."'";
+		$sql = "select member_id from login where login_key = '".$key."'";
 		
 		// if a record is found, they are logged in
 		if(mysql_num_rows($result = mysql_query($sql)) > 0) { $logged_in = true; }

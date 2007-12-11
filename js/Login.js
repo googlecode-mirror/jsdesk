@@ -38,7 +38,7 @@ Login = function() {
 
     return{
         Init:function() {
-
+            Ext.QuickTips.init();
             //            var logoPanel = new Ext.Panel({
             //                baseCls: 'x-plain',
             //                bodyStyle: 'background:#f9f9f9 url(wallpapers/qwikioffice.jpg) no-repeat center center;',
@@ -335,13 +335,16 @@ Login = function() {
                 dialog.destroy(true);
                 Ext.getBody().down('.ext-el-mask').hide();
 //                Ext.get('ext-gen15').hide(); // not sure why this mask from the waitMsg lingers :(
+                // get the path
+				var path = window.location.pathname,
+					path = path.substring(0, path.lastIndexOf('/') + 1);
                 // set the cookie
-                set_cookie('key', a.result.key, '', '/', '', '');
+                set_cookie('key', a.result.key, '', path, '', '' );
+				set_cookie('memberName', a.result.name, '', path, '', '' );
+				set_cookie('memberType', a.result.type, '', path, '', '' );
                 set_cookie('memberUsername', a.result.username, '', '/', '', '');
-                set_cookie('memberName', a.result.name, '', '/', '', '');
-                set_cookie('memberType', a.result.type, '', '/', '', '');
 				// redirect the window
-                //window.location = "/";
+                //window.location = path;
             }
         }
     };

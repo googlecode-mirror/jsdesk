@@ -14,8 +14,8 @@ Plugin.Docs = Ext.extend(Ext.app.Module, {
 	
     init : function(){
         this.launcher = {
-        	menuText: 'Documentation',
-            text: 'Documentation',
+        	menuText: 'Developer Docs',
+            text: 'Developer Docs',
             iconCls: 'bogus',
             handler : this.createWindow,
             scope: this
@@ -30,7 +30,7 @@ Plugin.Docs = Ext.extend(Ext.app.Module, {
         	var winWidth = desktop.getWinWidth() / 1.1;
 			var winHeight = desktop.getWinHeight() / 1.1;
 			
-			var east = new Ext.Panel({
+			var west = new Ext.Panel({
 				border: false,
 				collapsible: true,
 				collapseMode: 'mini',
@@ -69,7 +69,7 @@ Plugin.Docs = Ext.extend(Ext.app.Module, {
 						</li> \
 					</ul>',
 				id: 'docs-nav',
-				region: 'east',
+				region: 'west',
 				split: true,
 				width: 180
 			});
@@ -89,19 +89,19 @@ Plugin.Docs = Ext.extend(Ext.app.Module, {
                 height: winHeight,
                 iconCls: 'bogus',
                 items: [
-                	east,
+                	west,
                 	this.cPanel
                 ],
                 layout: 'border',
                 shim: false,
-                title: 'Documentation',
+                title: 'Developer Docs',
                 width: winWidth
             });
             
             this.initActions();
 	        
 	        // listeners
-	        var w = east.body;
+	        var w = west.body;
 			w.on('mousedown', this.doAction, this, {delegate:'a'});
 			w.on('click', Ext.emptyFn, null, {delegate:'a', preventDefault:true});
         }

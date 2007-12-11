@@ -34,7 +34,8 @@ echo '<title>'.$txtTitlePrefix.' | Desktop | '.$txtTitleSuffix.'</title>';
 <!--script type="text/javascript" src="js/ext/ux/Crypto/Ext.ux.Crypto.AES.js"></script-->
 
 <link rel="stylesheet" type="text/css" href="css/desktop.css" />
-<link rel="stylesheet" type="text/css" href="css/vista-black/styles.css" />
+<link rel="stylesheet" type="text/css" href="css/preferences.css" />
+<link rel="stylesheet" type="text/css" href="css/vista-black/vista-black.css" />
 <script type="text/javascript" src="lang/ENG/Text.js"></script>
 <script type="text/javascript" src="js/lib/Module.js"></script>
 
