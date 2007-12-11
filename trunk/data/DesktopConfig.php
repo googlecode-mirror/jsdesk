@@ -22,7 +22,12 @@
  * 				'acc-win',
  * 				'layout-win',
  * 				'bogus-menu'
- * 			]
+ * 			],
+ * 			'styles': {
+ * 				'backgroundcolor': 'f9f9f9',
+ * 				'transparency': false,
+ * 				'wallpaper': 'qwikioffice.jpg'
+ * 			}
  * 		}
  * }
  */
@@ -32,18 +37,26 @@ $json = "{'success': false}";
 
 // get the desktop
 require_once("desktop.php");
-if(class_exists('desktop')){
+if(class_exists('desktop'))
+{
 	$desktop = new desktop();
 	
+	// connect to data
+	//$desktop->connect_to_db();
+
 	// get member id
 	$member_id = $desktop->get_member_id();
 	
-	if($member_id != ""){
+	if($member_id != "")
+	{
 		$sql =
 			"select
+			backgroundcolor,
 			desktopcontextmenu,
 			quickstart,
-			startmenu
+			startmenu,
+			transparency,
+			wallpaper
 			from
 			desktopConfig
 			where
@@ -53,27 +66,41 @@ if(class_exists('desktop')){
 			order by
 			member_id asc";
 		
-		if($result = mysql_query($sql)){
+		if($result = mysql_query($sql))
+		{
+			// get defaults
 			$row = mysql_fetch_assoc($result);
 			
-			$desktopcontextmenu = $row["desktopcontextmenu"] != "" ? $row["desktopcontextmenu"] : "['docs-win', 'preferences-win']";
-			$quickstart = $row["quickstart"] != "" ? $row["quickstart"] : "['grid-win','tab-win','acc-win','layout-win']";
-			$startmenu = $row["startmenu"] != "" ? $row["startmenu"] : "['docs-win','grid-win','tab-win','acc-win','layout-win','bogus-menu']";
+			$backgroundcolor = $row["backgroundcolor"];
+			$desktopcontextmenu = $row["desktopcontextmenu"] != "" ? $row["desktopcontextmenu"] : "[]";
+			$quickstart = $row["quickstart"] != "" ? $row["quickstart"] : "[]";
+			$startmenu = $row["startmenu"] != "" ? $row["startmenu"] : "[]";
+			$transparency = $row["transparency"] != "" ? $row["transparency"] : false;
+			$wallpaper = $row["wallpaper"];
 			
-			if(mysql_num_rows($result) > 1){ // get members preferences
+			// get member preferences, if any
+			if(mysql_num_rows($result) > 1)
+			{
 				$row = mysql_fetch_assoc($result);
-				if($row["quickstart"] != ""){
-					$quickstart = $row["quickstart"];
-				}
+
+				$backgroundcolor = $row["backgroundcolor"] != "" ? $row["backgroundcolor"] : $backgroundcolor;
+				$quickstart = $row["quickstart"] != "" ? $row["quickstart"] : $quickstart;
+				$transparency = $row["transparency"] != "" ? $row["transparency"] : $transparency;
+				$wallpaper = $row["wallpaper"] != "" ? $row["wallpaper"] : $wallpaper;
 			}
-			
+
 			$json =
 			"{
 				'success': true,
 				'config': {
 					'desktopcontextmenu': ".$desktopcontextmenu.",
 					'quickstart': ".$quickstart.",
-					'startmenu': ".$startmenu."
+					'startmenu': ".$startmenu.",
+					'styles': {
+						'backgroundcolor': '".$backgroundcolor."',
+						'transparency': ".$transparency.",
+						'wallpaper': '".$wallpaper."'
+					}
 				}
 			}";
 		}

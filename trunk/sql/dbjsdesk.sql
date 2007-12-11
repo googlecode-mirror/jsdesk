@@ -1,11 +1,4 @@
--- phpMyAdmin SQL Dump
--- version 2.11.2.1
--- http://www.phpmyadmin.net
---
--- Host: sql.shadowpuppet.net
--- Generation Time: Dec 01, 2007 at 05:38 PM
--- Server version: 5.0.24
--- PHP Version: 4.4.7
+
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -24,15 +17,16 @@ CREATE TABLE IF NOT EXISTS `desktopConfig` (
   `startmenu` text,
   `quickstart` text,
   `desktopcontextmenu` text,
+  `wallpaper` varchar(255) default NULL,
+  `backgroundcolor` varchar(6) default NULL,
+  `transparency` varchar(5) default NULL,
   PRIMARY KEY  (`member_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `desktopConfig`
---
-
-INSERT INTO `desktopConfig` (`member_id`, `startmenu`, `quickstart`, `desktopcontextmenu`) VALUES
-(0, '["docs-win","grid-win","tab-win","bogus-menu","acc-win","layout-win"]', '["docs-win","grid-win","tab-win","acc-win","layout-win"]', '["preferences-win"]');
+-- ----------------------------
+-- Records
+-- ----------------------------
+INSERT INTO `desktopConfig` VALUES ('0', '[\"docs-win\",\"grid-win\",\"tab-win\",\"bogus-menu\",\"acc-win\",\"layout-win\"]', '[\"docs-win\",\"grid-win\",\"tab-win\",\"acc-win\",\"layout-win\"]', '[\"preferences-win\"]', 'desktop.jpg', '3d71b8', 'false');
 
 -- --------------------------------------------------------
 
@@ -60,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `login` (
 
 CREATE TABLE IF NOT EXISTS `members` (
   `member_id` int(11) unsigned NOT NULL auto_increment,
-  `member_type` tinyint(1) unsigned NOT NULL default '1',
+  `member_type` int(2) unsigned NOT NULL default '2',
   `member_username` varchar(255) NOT NULL,
   `member_first_name` varchar(40) default NULL,
   `member_last_name` varchar(35) default NULL,
@@ -84,12 +78,12 @@ CREATE TABLE IF NOT EXISTS `member_types` (
   `type_id` int(2) unsigned NOT NULL auto_increment,
   `type_text` varchar(25) default NULL,
   PRIMARY KEY  (`type_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `member_types`
 --
 
-INSERT INTO `member_types` (`type_id`, `type_text`) VALUES
-(1, 'user'),
-(2, 'admin');
+INSERT INTO `member_types` VALUES ('1', 'administrator');
+INSERT INTO `member_types` VALUES ('2', 'user');
+INSERT INTO `member_types` VALUES ('3', 'demo');

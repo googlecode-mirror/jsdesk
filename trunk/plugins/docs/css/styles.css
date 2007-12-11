@@ -25,6 +25,7 @@
 }
 #docs-win-shortcut img {
 	background-image:url(images/desktop-icon.png);
+    filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/desktop-icon.png', sizingMethod='scale');
 	height:48px;
 	width:48px;
 }

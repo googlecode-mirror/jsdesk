@@ -1,0 +1,100 @@
+.icon-pref {
+	background-image: url( images/icons/preferences.gif ) !important;
+}
+#pref-win .x-panel-footer {
+	background-color:#f1f1f1;
+	border-top:1px solid #ccc;
+}
+#pref-win .x-panel-header {
+	background:transparent none;
+	border-bottom:0px none;
+}
+#pref-win-card-1 .x-panel-body li {
+	margin:3px;
+	margin-bottom:20px;
+}
+#pref-win-card-1 .x-panel-body li img {
+	width:24px;
+	height:24px;
+	vertical-align:middle;
+	margin-right:2px;
+	margin-bottom:2px;
+}
+#pref-win-card-1 .x-panel-body li a {
+	text-decoration:none;
+	color:#336699;
+	font-weight:bold;
+}
+#pref-win-card-1 .x-panel-body li span {
+	color:#000;
+	padding-left:30px;
+}
+.icon-pref-startmenu {
+	/* background-image:url(images/bogus.png); */
+}
+.icon-pref-quickstart {
+	/* background-image:url(images/bogus.png); */
+}
+.icon-pref-wallpaper {
+	background-image:url(images/icons/wallpaper.gif);
+}
+#pref-win-card-1 .x-panel-body {
+	/* background:#5b9d82 url(images/window/side-panel-bluegreen.gif) repeat-x; */
+	color:#fff;
+	padding:10px
+}
+.quick-start-plugin {
+	background-image:url(images/tree/plugin.gif) !important;
+}
+
+#BkView .x-panel-header{
+	background:transparent none;
+	border-bottom:1px solid #99bbe8;
+}
+#BkView .x-panel-body{
+	background: white;
+	font: 11px Arial, Helvetica, sans-serif;
+}
+#BkView .bkview-thumb{
+	background: #dddddd;
+	padding: 3px;
+}
+#BkView .bkview-thumb img{
+	height: 67px;
+	width: 107px;
+}
+#BkView .bkview-thumb-wrap{
+	float: left;
+	margin: 4px;
+	margin-right: 0;
+	padding: 5px;
+}
+#BkView .bkview-thumb-wrap span{
+	display: block;
+	overflow: hidden;
+	text-align: center;
+}
+
+#BkView .x-view-over{
+    border:1px solid #dddddd;
+    background: #efefef url(../../Ext/2.0/resources/images/default/grid/row-over.gif) repeat-x left top;
+	padding: 4px;
+}
+
+#BkView .x-view-selected{
+	background: #eff5fb url(images/selected.gif) no-repeat right bottom;
+	border:1px solid #99bbe8;
+	padding: 4px;
+}
+#BkView .x-view-selected .bkview-thumb{
+	background:transparent;
+}
+
+#BkView .loading-indicator {
+	font-size:11px;
+	background-image:url('../../Ext/2.0/resources/images/default/grid/loading.gif');
+	background-repeat: no-repeat;
+	background-position: left;
+	padding-left:20px;
+	margin:10px;
+}

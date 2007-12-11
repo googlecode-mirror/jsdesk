@@ -266,15 +266,15 @@ Ext.extend(Ext.ux.StartMenu, Ext.menu.Menu, {
 
     addToolItem : function(item){
         this.toolItems.add(item);
-        if(this.ul){
+        if(this.toolsUl){
             var li = document.createElement("li");
             li.className = "x-menu-list-item";
-            this.ul.dom.appendChild(li);
+            this.toolsUl.dom.appendChild(li);
             item.render(li, this);
             this.delayAutoWidth();
         }
         return item;
-    },
+    }, 
 
     addToolMenuItem : function(config){
         if(!(config instanceof Ext.menu.Item)){
@@ -286,6 +286,21 @@ Ext.extend(Ext.ux.StartMenu, Ext.menu.Menu, {
             }
         }
         return this.addToolItem(config);
+    },
+
+    addModule: function(m){
+        var ms = this.modules;
+        m.menuItem = this.startMenu.add(m.launcher);
+        m.app = this
+        ms[ms.length]=m;
+    },
+
+    removeModule: function(name){
+        var m = this.getModule(name)
+        if (m && m.menuItem) {
+            this.startMenu.remove(m.menuItem);
+        }
+
     },
     
     setTitle : function(title, iconCls){

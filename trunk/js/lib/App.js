@@ -1,5 +1,5 @@
 /*
- * Ext JS Library 2.0 Beta 1
+ * Ext JS Library 2.0 Beta 2
  * Copyright(c) 2006-2007, Ext JS, LLC.
  * licensing@extjs.com
  * 
@@ -59,6 +59,7 @@ Ext.extend(Ext.app.App, Ext.util.Observable, {
 			this.initDesktopContextMenu(o.desktopcontextmenu);
 			this.initStartMenu(o.startmenu);
 	        this.initQuickStart(o.quickstart);
+	        this.initStyles(o.styles);
 		}
     },
 
@@ -108,10 +109,22 @@ Ext.extend(Ext.app.App, Ext.util.Observable, {
 		}
     },
 
+    initStyles : function(s){
+    	if(s.wallpaper){
+    		this.desktop.setWallpaper(s.wallpaper);
+    	}
+    	if(s.backgroundcolor){
+    		this.desktop.setBackgroundColor(s.backgroundcolor);
+    	}
+    	if(String(s.transparency) !== ""){
+    		this.desktop.setTransparency(s.transparency);
+    	}
+    },
+
     getModule : function(name){
     	var ms = this.modules;
     	for(var i = 0, len = ms.length; i < len; i++){
-    		if(ms[i].id == name || ms[i].appType == name){
+    		if(ms[i].id == name || ms[i].appType == name || ms[i].launcher.windowId == name){
     			return ms[i];
 			}
         }
