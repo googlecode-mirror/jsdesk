@@ -180,17 +180,29 @@ Ext.Desktop = function(app) {
 
     layout();
 
-    if (shortcuts) {
-        shortcuts.on('click', function(e, t) {
-            if (t = e.getTarget('dt', shortcuts)) {
-                e.stopEvent();
-                var module = app.getModule(t.id.replace('-shortcut', ''));
-                if (module) {
-                    module.createWindow();
-                }
-            }
-        });
-    }
+    if(shortcuts){
+       // added by iDevelopment - create movable desktop items
+       var children = shortcuts.dom.childNodes;
+       for (i = 0; i < children.length; i++){
+           //if(isDefined(children[i].id)){
+                          if(children[i].id){
+               var shortcut = Ext.get(children[i].id);
+               shortcut.initDD('DesktopShortcuts');
+           }
+       }
+       // end added by iDevelopment
+
+       // added by iDevelopment - changed from click to dblclick to prevent program starting while drag and dropping
+       shortcuts.on('dblclick', function(e, t){
+           if(t = e.getTarget('dt', shortcuts)){
+               e.stopEvent();
+               var module = app.getModule(t.id.replace('-shortcut', ''));
+               if(module){
+                   module.createWindow();
+               }
+           }
+       });
+   }
 
     this.cmenu = new Ext.menu.Menu();
 
