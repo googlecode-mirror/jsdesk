@@ -9,16 +9,18 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `desktopConfig`
+-- Table structure for table `desktop_config`
 --
 
-CREATE TABLE IF NOT EXISTS `desktopConfig` (
+CREATE TABLE IF NOT EXISTS `desktop_config` (
   `member_id` int(11) unsigned NOT NULL default '0',
   `startmenu` text,
   `quickstart` text,
   `desktopcontextmenu` text,
-  `wallpaper` varchar(255) default NULL,
   `backgroundcolor` varchar(6) default NULL,
+  `wallpaper` varchar(255) default NULL,
+  `wallpaperposition` varchar(6) default NULL,
+  `theme` varchar(255) default NULL,
   `transparency` varchar(5) default NULL,
   PRIMARY KEY  (`member_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -26,15 +28,15 @@ CREATE TABLE IF NOT EXISTS `desktopConfig` (
 -- ----------------------------
 -- Records
 -- ----------------------------
-INSERT INTO `desktopConfig` VALUES ('0', '[\"docs-win\",\"grid-win\",\"tab-win\",\"bogus-menu\",\"acc-win\",\"layout-win\"]', '[\"docs-win\",\"grid-win\",\"tab-win\",\"acc-win\",\"layout-win\"]', '[\"preferences-win\"]', 'desktop.jpg', '3d71b8', 'false');
-
+INSERT INTO `desktop_config` VALUES ('0', '[\"docs-win\",\"grid-win\",\"tab-win\",\"bogus-menu\",\"acc-win\",\"layout-win\"]', '[\"docs-win\",\"grid-win\",\"tab-win\",\"acc-win\",\"layout-win\"]', '[\"preferences-win\"]', 'f9f9f9', 'Ladybuggin', 'center', 'Vista', 'false');
+INSERT INTO `desktop_config` VALUES ('3', null, '[\"mytest-win\",\"docs-win\",\"layout-win\",\"grid-win\",\"tab-win\",\"acc-win\",\"bogus-win\",\"preferences-win\"]', null, 'f9f9f9', 'Ladybuggin', 'center', 'Dark Gray', 'true');
 -- --------------------------------------------------------
 
 --
--- Table structure for table `login`
+-- Table structure for table `desktop_login`
 --
 
-CREATE TABLE IF NOT EXISTS `login` (
+CREATE TABLE IF NOT EXISTS `desktop_login` (
   `member_id` int(11) unsigned NOT NULL default '0',
   `login_key` varchar(128) default NULL,
   `login_ip` varchar(16) default NULL,
@@ -42,48 +44,107 @@ CREATE TABLE IF NOT EXISTS `login` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `login`
+-- Dumping data for table `desktop_login`
 --
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `members`
+-- Table structure for table `desktop_members`
 --
 
-CREATE TABLE IF NOT EXISTS `members` (
+CREATE TABLE `desktop_members` (
   `member_id` int(11) unsigned NOT NULL auto_increment,
-  `member_type` int(2) unsigned NOT NULL default '2',
-  `member_username` varchar(255) NOT NULL,
-  `member_first_name` varchar(40) default NULL,
-  `member_last_name` varchar(35) default NULL,
-  `member_email` varchar(55) default NULL,
-  `member_password` text,
+  `member_type` int(2) unsigned default NULL,
+  `member_username` varchar(255) default NULL,
+  `member_first_name` varchar(50) default NULL,
+  `member_last_name` varchar(50) default NULL,
+  `member_email` varchar(255) default NULL,
+  `member_password` text default NULL,
   `mail_server` varchar(100) default NULL,
   `mail_server_login` varchar(25) default NULL,
   `mail_server_password` varchar(25) default NULL,
   `mail_server_port` varchar(15) default NULL,
   PRIMARY KEY  (`member_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+INSERT INTO `desktop_members` VALUES ('3', '3', 'demo', 'Todd', 'Murdock', 'demo@jsdesk.com', 'demo', null, null, null, null); 
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `member_types`
+-- Table structure for table `desktop_member_types`
 --
 
-CREATE TABLE IF NOT EXISTS `member_types` (
+CREATE TABLE IF NOT EXISTS `desktop_member_types` (
   `type_id` int(2) unsigned NOT NULL auto_increment,
   `type_text` varchar(25) default NULL,
   PRIMARY KEY  (`type_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
--- Dumping data for table `member_types`
+-- Dumping data for table `desktop_member_types`
 --
 
-INSERT INTO `member_types` VALUES ('1', 'administrator');
-INSERT INTO `member_types` VALUES ('2', 'user');
-INSERT INTO `member_types` VALUES ('3', 'demo');
+INSERT INTO `desktop_member_types` VALUES ('1', 'administrator');
+INSERT INTO `desktop_member_types` VALUES ('2', 'user');
+INSERT INTO `desktop_member_types` VALUES ('3', 'demo');
+
+
+
+SET FOREIGN_KEY_CHECKS=0;
+-- ----------------------------
+-- Table structure for desktop_themes
+-- ----------------------------
+CREATE TABLE `desktop_themes` (
+  `id` varchar(25) NOT NULL default '',
+  `thumbnail` varchar(255) default NULL,
+  `path` varchar(255) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records
+-- ----------------------------
+INSERT INTO `desktop_themes` VALUES ('Black', 'resources/themes/xtheme-black/xtheme-black.png', 'resources/themes/xtheme-black/css/xtheme-black.css');
+INSERT INTO `desktop_themes` VALUES ('Dark Gray', 'resources/themes/xtheme-darkgray/xtheme-darkgray.png', 'resources/themes/xtheme-darkgray/css/xtheme-darkgray.css');
+INSERT INTO `desktop_themes` VALUES ('Olive', 'resources/themes/xtheme-olive/xtheme-olive.png', 'resources/themes/xtheme-olive/css/xtheme-olive.css');
+INSERT INTO `desktop_themes` VALUES ('Purple', 'resources/themes/xtheme-purple/xtheme-purple.png', 'resources/themes/xtheme-purple/css/xtheme-purple.css');
+INSERT INTO `desktop_themes` VALUES ('Slate', 'resources/themes/xtheme-slate/xtheme-slate.png', 'resources/themes/xtheme-slate/css/xtheme-slate.css');
+INSERT INTO `desktop_themes` VALUES ('Vista', 'resources/themes/xtheme-vista/xtheme-vista.png', 'resources/themes/xtheme-vista/css/xtheme-vista.css');
+
+
+
+
+SET FOREIGN_KEY_CHECKS=0;
+-- ----------------------------
+-- Table structure for desktop_wallpapers
+-- ----------------------------
+CREATE TABLE `desktop_wallpapers` (
+  `id` varchar(25) NOT NULL default '',
+  `thumbnail` varchar(255) default NULL,
+  `path` varchar(255) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records
+-- ----------------------------
+INSERT INTO `desktop_wallpapers` VALUES ('qWikiOffice', 'resources/wallpapers/thumbnails/qwikioffice.jpg', 'resources/wallpapers/qwikioffice.jpg');
+INSERT INTO `desktop_wallpapers` VALUES ('Colorado Farm', 'resources/wallpapers/thumbnails/colorado-farm.jpg', 'resources/wallpapers/colorado-farm.jpg');
+INSERT INTO `desktop_wallpapers` VALUES ('Curls On Green', 'resources/wallpapers/thumbnails/curls-on-green.jpg', 'resources/wallpapers/curls-on-green.jpg');
+INSERT INTO `desktop_wallpapers` VALUES ('Emotion', 'resources/wallpapers/thumbnails/emotion.jpg', 'resources/wallpapers/emotion.jpg');
+INSERT INTO `desktop_wallpapers` VALUES ('Eos', 'resources/wallpapers/thumbnails/eos.jpg', 'resources/wallpapers/eos.jpg');
+INSERT INTO `desktop_wallpapers` VALUES ('Fields of Peace', 'resources/wallpapers/thumbnails/fields-of-peace.jpg', 'resources/wallpapers/fields-of-peace.jpg');
+INSERT INTO `desktop_wallpapers` VALUES ('Fresh Morning', 'resources/wallpapers/thumbnails/fresh-morning.jpg', 'resources/wallpapers/fresh-morning.jpg');
+INSERT INTO `desktop_wallpapers` VALUES ('Ladybuggin', 'resources/wallpapers/thumbnails/ladybuggin.jpg', 'resources/wallpapers/ladybuggin.jpg');
+INSERT INTO `desktop_wallpapers` VALUES ('Summer', 'resources/wallpapers/thumbnails/summer.jpg', 'resources/wallpapers/summer.jpg');
+INSERT INTO `desktop_wallpapers` VALUES ('Dead Rat', 'resources/wallpapers/thumbnails/DeadRat.jpg', 'resources/wallpapers/DeadRat.jpg');
+INSERT INTO `desktop_wallpapers` VALUES ('Blue', 'resources/wallpapers/thumbnails/blue.jpg', 'resources/wallpapers/blue.jpg');
+INSERT INTO `desktop_wallpapers` VALUES ('Blue Desk 1', 'resources/wallpapers/thumbnails/desk.jpg', 'resources/wallpapers/desk.jpg');
+INSERT INTO `desktop_wallpapers` VALUES ('Blue Desk 2', 'resources/wallpapers/thumbnails/desktop.jpg', 'resources/wallpapers/desktop.jpg');
+INSERT INTO `desktop_wallpapers` VALUES ('Blue Desk 3', 'resources/wallpapers/thumbnails/desktop2.jpg', 'resources/wallpapers/desktop2.jpg');
+INSERT INTO `desktop_wallpapers` VALUES ('Elevator Shaft', 'resources/wallpapers/thumbnails/Structure-ElevatorShaft-7.jpg', 'resources/wallpapers/Structure-ElevatorShaft-7.jpg');
+INSERT INTO `desktop_wallpapers` VALUES ('Sound Board', 'resources/wallpapers/thumbnails/TripleDoor-SoundBoard-L.jpg', 'resources/wallpapers/TripleDoor-SoundBoard-L.jpg');

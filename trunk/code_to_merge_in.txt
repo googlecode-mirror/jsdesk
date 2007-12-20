@@ -1,0 +1,432 @@
+/*
+*  Add a panel in "Preference" module
+*  That allows add / remove shortcuts on the desktop
+*
+*
+* Auteur: Gsylvain35  : Gsylvain35@free.fr
+*
+*/
+
+//update in file
+Desktop.js
+App.js
+Preference.js
+Preference.php
+DesktopConfig.php
+
+//SQL
+ALTER TABLE `desktop_config` ADD `shortcut` TEXT NULL AFTER `quickstart` ;
+
+
+
+//------ Desktop.js -------//
+
+//in end 
+//Add
+
+
+/**
+ * @class Ext.ux.ShortCutPanel
+ * @extends Ext.BoxComponent
+ */
+Ext.ux.ShortCutPanel = Ext.extend(Ext.BoxComponent, {
+	
+	initComponent : function(){
+		Ext.ux.ShortCutPanel.superclass.initComponent.call(this);        
+	},
+	
+	addButton : function(id,config){
+		var  template = new Ext.Template(' <dt id="'+id+'-shortcut" ><a href="#"><img  src="'+Ext.BLANK_IMAGE_URL+'"   width="48px" height="48px" /><div>'+config.text+'</div></a></dt>');
+			
+		 var shortcutsEl = Ext.get('x-shortcuts');
+		 shortcutsEl.createChild( template.apply());
+		
+		 var shortcut = Ext.get(id+'-shortcut');
+		shortcut.initDD('DesktopShortcuts');
+
+		return id+'-shortcut';
+	},
+	
+	removeButton : function(id){
+		var sc = Ext.get(id+'-shortcut');
+		sc.remove();
+	},
+	
+
+
+    
+});
+
+//After
+var shortcuts = Ext.get('x-shortcuts');
+
+//Add
+this.scPanel = new Ext.ux.ShortCutPanel();
+
+
+//Before 
+
+ layout();
+
+//Add
+ this.addShortCutButton = function  (id,config){
+		 return this.scPanel.addButton(id,config, 'x-shortcuts');
+     };
+     
+     this.removeShortCutButton = function(idsc){
+		 this.scPanel.removeButton(idsc);
+     };
+
+
+//replace
+
+	if(shortcuts){
+shortcuts.on('click', function(e, t){
+if(t = e.getTarget('dt', shortcuts)){
+e.stopEvent();
+var module = app.getModule(t.id.replace('-shortcut', ''));
+if(module){
+module.createWindow();
+}
+}
+});
+}
+
+//By 
+
+
+	if(shortcuts){
+shortcuts.on('dblclick', function(e, t){
+if(t = e.getTarget('dt', shortcuts)){
+e.stopEvent();
+var module = app.getModule(t.id.replace('-shortcut', ''));
+if(module){
+module.createWindow();
+}
+}
+});
+}
+
+
+//---------- App.js ------//
+
+//After
+initQuickStart : function(mIds){
+		if(mIds){
+			for(var i = 0, len = mIds.length; i < len; i++){
+	            var m = this.getModule(mIds[i]);
+	            if(m){
+	            	m.quickStartButton = this.desktop.taskbar.addQuickStartButton(m.launcher);
+				}
+	        }
+		}
+    },
+    
+
+
+//Add
+    initShortCut : function(mIds){
+		if(mIds){
+			for(var i = 0, len = mIds.length; i < len; i++){
+	            var m = this.getModule(mIds[i]);
+	            if(m){
+	            	m.SortCutButton = this.desktop.addShortCutButton (m.id,m.launcher);
+			}
+	        }
+		}
+    },
+
+
+//look for
+ initDesktopConfig : function(o){
+    	if(!o){
+			this.getDesktopConfig();
+		}else{
+			this.desktopConfig = o;
+			this.initDesktopContextMenu(o.desktopcontextmenu);
+			this.initStartMenu(o.startmenu);
+			this.initQuickStart(o.quickstart);
+			this.initStyles(o.styles);
+		}
+    },
+
+//After
+this.initQuickStart(o.quickstart);
+//Add
+this.initShortCut(o.shortcut);
+
+
+//--------- Preference.js ------//
+
+//After
+	cards : [
+		'pref-win-card-1', // navigation
+		'pref-win-card-2', // quickstart
+		'pref-win-card-3', // color and appearance
+		'pref-win-card-4',  // wallpaper
+
+//Add
+'pref-win-card-5'  // shortcut
+
+//After
+var navigation = new Ext.Panel({
+				bodyStyle: 'padding:15px',
+				border: false,
+				html: '<ul id="pref-nav-panel"> \
+						<li> \
+							<img src="'+Ext.BLANK_IMAGE_URL+'" class="icon-pref-quickstart"/> \
+							<a id="viewQuickstart" href="#">Quick Start Apps</a><br /> \
+							<span>Choose which applications appear in your Quick Start panel.</span> \
+						</li> \
+						<li> \
+							<img src="'+Ext.BLANK_IMAGE_URL+'" class="icon-pref-appearance"/> \
+							<a id="viewAppearance" href="#">Window Color and Appearance</a><br /> \
+							<span>Fine tune window color and style of your windows.</span> \
+						</li> \
+						<li> \
+							<img src="'+Ext.BLANK_IMAGE_URL+'" class="icon-pref-wallpaper"/> \
+							<a id="viewWallpapers" href="#">Desktop Background</a><br /> \
+							<span>Choose from available wallpapers or colors to decorate you desktop.</span> \
+						</li> \
+
+
+//Add
+
+						<li> \
+							<img src="'+Ext.BLANK_IMAGE_URL+'" class="icon-pref-quickstart"/> \
+							<a id="viewShortCut" href="#">ShortCuts</a><br /> \
+							<span>Choose which applications appear in your Desktop.</span> \
+						</li> \
+
+//After
+var wallpaper = MyDesktop.Preferences.Background.init(this);
+//Add
+var shortcut =  MyDesktop.Preferences.ShortCut.init(this);
+
+
+//After
+	items: [
+                	navigation,
+                	quickstart,
+                	appearance,
+                	wallpaper,
+
+//Add
+			shortcut
+
+
+//After
+this.actions = {
+			'viewQuickstart' : function(app){
+	    		app.viewCard('pref-win-card-2');
+	    	},
+	    	
+	    	'viewAppearance' : function(app){
+	    		app.viewCard('pref-win-card-3');
+	    	},
+	    	
+	    	'viewWallpapers' : function(app){
+	    		app.viewCard('pref-win-card-4');
+	    	},
+	    	
+//Add
+	    	'viewShortCut' : function(app){
+	    		app.viewCard('pref-win-card-5');
+	    	}
+
+//After
+params: {
+				task: 'save',
+				backgroundcolor: c.styles.backgroundcolor,
+				quickstart: Ext.encode(c.quickstart),
+//Add
+				shortcut: Ext.encode(c.shortcut),
+
+
+//In End 
+//Add
+
+MyDesktop.Preferences.ShortCut = function(){
+	var tree;
+    
+	function  inShortCut(id, qsIds){
+		for(var i = 0, len = qsIds.length; i < len; i++){
+			if(id == qsIds[i]){
+				return true;
+			}
+		}
+	}
+			
+	function expandNodes(ms, qsIds){
+		var nodes = [];
+		
+		for(var i = 0, len = ms.length; i < len; i++){
+			var o = ms[i].launcher ? ms[i].launcher : ms[i];
+			if(o.menu){
+				/* nodes.push({
+					leaf: false,
+					text: o.text || o.menuText,
+					children: this.expandNodes(o.menu.items, qsIds)
+				}); */
+			}else{
+				nodes.push({
+		           	checked:  inShortCut(ms[i].id, qsIds) ? true : false,
+		           	iconCls: 'short-cut-plugin',
+		           	id: ms[i].id,
+		           	leaf: true,
+		           	text: o.text || o.menuText
+				});
+			}
+		}
+		
+		return nodes;
+	}
+	
+	function onCheckChange(node, checked){
+    	var qs = this.app.desktopConfig.shortcut;
+    	
+    	if(node.leaf && node.id){
+    		if(checked){
+				this.app.desktop.addShortCutButton(node.id,node);
+				
+				// update desktopConfig
+				qs.push(node.id);
+    		}else{
+				this.app.desktop.removeShortCutButton(node.id);
+				
+				// update desktopConfig
+				var i = 0;
+				while(i < qs.length){
+					if(qs[i] == node.id){
+						qs.splice(i, 1);
+					}else{
+						i++;
+					}
+				}
+    		}
+    	}
+    }
+    
+    function onClose(){
+		this.owner.win.close();
+	}
+	
+    function onSave(){
+    	this.owner.save();
+    }
+    
+    function showProgress(){
+    	Ext.MessageBox.show({
+           msg: 'Saving your data, please wait...',
+           progressText: 'Saving...',
+           width:300,
+           wait:true,
+           waitConfig: {interval:200},
+           icon:'desktop-download'
+       });
+	}
+	
+	return {
+		app : null,
+		owner : null,
+		
+		init : function(owner){
+			this.owner = owner;
+			this.app = owner.app;
+			
+			var ms = this.app.modules,
+				qsIds = this.app.desktopConfig.shortcut,
+				nodes = expandNodes(ms, qsIds);
+				
+			tree = new Ext.tree.TreePanel({
+				autoScroll: true,
+				bodyStyle: 'padding:10px',
+				border: false,
+				buttons: [{
+					handler: onSave,
+					scope: this,
+					text: 'Save'
+				},{
+					handler: onClose,
+					scope: this,
+					text: 'Close'
+				}],
+				id: 'pref-win-card-5',
+				lines: false,
+				listeners: {
+					'checkchange': {
+						fn: onCheckChange,
+						scope: this
+					}
+				},
+				loader: new Ext.tree.TreeLoader(),
+				rootVisible: false,
+				root: new Ext.tree.AsyncTreeNode({
+					text: 'Short Cut Apps',
+					children: nodes
+				}),
+				title: 'Short Cut Apps'
+			});
+			
+			return tree;
+		}
+	};
+}();
+
+
+//----- Preference.php ----//
+
+//After
+$sql =
+			"update
+			desktop_config
+			set
+			backgroundcolor = '".$_POST["backgroundcolor"]."',
+			quickstart = '".$_POST["quickstart"]."',
+
+//Add
+			shortcut = '".$_POST["shortcut"]."',
+
+//After
+$sql = "insert into desktop_config (
+			member_id,
+			backgroundcolor,
+			quickstart,
+			shortcut,
+			theme,
+			transparency,
+			wallpaper,
+			wallpaperposition)
+			values (
+			".$member_id.",
+			'".$_POST["backgroundcolor"]."',
+			'".$_POST["quickstart"]."',
+//Add
+			'".$_POST["shortcut"]."',
+
+//------ DesktopConfig.php -------//
+//After
+$desktopcontextmenu = $row["desktopcontextmenu"] != "" ? $row["desktopcontextmenu"] : "[]";
+			$quickstart = $row["quickstart"] != "" ? $row["quickstart"] : "[]";
+
+//Add
+			$shortcut = $row["shortcut"] != "" ? $row["shortcut"] : "[]";
+
+//After
+$row = mysql_fetch_assoc($result);
+				
+				$backgroundcolor = $row["backgroundcolor"] != "" ? $row["backgroundcolor"] : $backgroundcolor;
+				$quickstart = $row["quickstart"] != "" ? $row["quickstart"] : $quickstart;
+
+//Add
+				$shortcut = $row["shortcut"] != "" ? $row["shortcut"] : $shortcut;
+
+//After
+
+'config': {
+					'desktopcontextmenu': ".$desktopcontextmenu.",
+					'quickstart': ".$quickstart.",
+//Add
+					'shortcut': ".$shortcut.",
+
+
