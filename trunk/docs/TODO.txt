@@ -1,4 +1,0 @@
--- fix login error handling so the message appears in the login dialog instead of a new message box (the box removes the backdrop filter over the start menu after being closed)
-
-
-
