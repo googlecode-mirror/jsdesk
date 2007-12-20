@@ -1,5 +1,5 @@
 <?php
-include("data/desktop.php");
+include("source/desktop.php");
 //include("func.php");
 //session_start();
 //header("Cache-control: private"); // IE 6 Fix.
@@ -15,12 +15,12 @@ echo '<meta name="robots" content="'.$robots.'" />';
 echo '<meta name="distribution" content="'.$distribution.'" />';
 echo '<title>'.$txtTitlePrefix.' | Desktop | '.$txtTitleSuffix.'</title>';
 ?>
-<link rel="stylesheet" type="text/css" href="css/load.css?v='.$ver_css.'" />
+<link rel="stylesheet" type="text/css" href="resources/css/load.css?v='.$ver_css.'" />
 </head>
 <body scroll="no">
 <div id="loading-mask">&#160;</div>
 	<div id="loading">
-		<div class="loading-indicator"><img src="js/ext/resources/images/default/grid/loading.gif" style="width:16px;height:16px;" align="absmiddle">&#160;Loading...</div>
+		<div class="loading-indicator"><img src="resources/images/default/grid/loading.gif" style="width:16px;height:16px;" align="absmiddle">&#160;Loading...</div>
 </div>
 <!-- include everything after the loading indicator -->
 
@@ -30,62 +30,67 @@ echo '<title>'.$txtTitlePrefix.' | Desktop | '.$txtTitleSuffix.'</title>';
 <script type="text/javascript" src="js/ext/ext-all.js"></script>
 
 <!-- LOGIN -->
-<script type="text/javascript" src="js/lib/Cookies.js"></script>
+<script type="text/javascript" src="source/login/cookies.js"></script>
 <!--script type="text/javascript" src="js/ext/ux/Crypto/Ext.ux.Crypto.AES.js"></script-->
 
-<link rel="stylesheet" type="text/css" href="css/desktop.css" />
-<link rel="stylesheet" type="text/css" href="css/preferences.css" />
-<link rel="stylesheet" type="text/css" href="css/vista-black/vista-black.css" />
+<!-- DESKTOP STYLES -->
+<link rel="stylesheet" type="text/css" href="resources/css/desktop.css" />
+<link rel="stylesheet" type="text/css" href="source/helpers/preferences/preferences.css" />
+
+<!-- THEME -->
+<link id="theme" rel="stylesheet" type="text/css" href="resources/themes/xtheme-vista/css/xtheme-vista.css" />
+
+<!-- LOCALIZATION -->
 <script type="text/javascript" src="lang/ENG/Text.js"></script>
-<script type="text/javascript" src="js/lib/Module.js"></script>
+
+<!-- MODULE BASE -->
+<script type="text/javascript" src="source/core/Module.js"></script>
 
 <?
 function showLogin(){
-	echo '<script type="text/javascript" src="js/Login.js"></script>';
+	echo '<script type="text/javascript" src="source/login/login.js"></script>';
 }
 
 if(!class_exists('desktop')) {
-//if(!isset($_SESSION["Logged"])){ // no session var (alternative using phpsessions)
 	showLogin();
 } else {
 	$desktop = new desktop();
 	if(!$desktop->is_logged_in()) {
-	// if($_SESSION["Logged"] != $_SESSION["UserName"].'_'.$_SESSION["Random"]) {//ses var, but NOT equal!!
-	//    session_destroy();
 		showLogin();
 	}
 }
 ?>
 
 <!-- DESKTOP -->
-<script type="text/javascript" src="js/lib/StartMenu.js"></script>
-<script type="text/javascript" src="js/lib/TaskBar.js"></script>
-<script type="text/javascript" src="js/Desktop.js"></script>
-<script type="text/javascript" src="js/lib/App.js"></script>
+<script type="text/javascript" src="source/core/StartMenu.js"></script>
+<script type="text/javascript" src="source/core/TaskBar.js"></script>
+<script type="text/javascript" src="source/core/Desktop.js"></script>
+<script type="text/javascript" src="source/core/App.js"></script>
+<script type="text/javascript" src="source/core/DesktopConfig.js"></script>
 
-<!-- PLUGINS / APPS -->
-<script type="text/javascript" src="plugins/layout-window/js/plugin.js"></script>
-<script type="text/javascript" src="plugins/docs/js/plugin.js"></script>
-<link rel="stylesheet" type="text/css" href="plugins/docs/css/styles.css" />
+<!-- DESKTOP HELPERS -->
+<script type="text/javascript" src="source/helpers/color-picker/color-picker.ux.js"></script>
+<link rel="stylesheet" type="text/css" href="source/helpers/color-picker/color-picker.ux.css" />
+<script type="text/javascript" src="source/helpers/preferences/Preferences.js"></script>
 
-<!-- DESKTOP CONFIGURATION -->
-<script type="text/javascript" src="js/DesktopConfig.js"></script>
-<script type="text/javascript" src="js/Preferences.js"></script>
+<!-- MODULES -->
+<script type="text/javascript" src="source/modules/layout-window/js/layout-window.js"></script>
+<script type="text/javascript" src="source/modules/docs/js/docs.js"></script>
+<link rel="stylesheet" type="text/css" href="source/modules/docs/css/docs.css" />
 
 <div id="x-desktop">
 	<dl id="x-shortcuts">
 
         <dt id="docs-win-shortcut">
-            <a href="#"><img src="css/images/s.gif" />
+            <a href="#"><img src="resources/images/default/s.gif" />
             <div>Developer Docs</div></a>
         </dt>
         <dt id="grid-win-shortcut">
-            <a href="#"><img src="css/images/s.gif" />
+            <a href="#"><img src="resources/images/default/s.gif" />
             <div>Grid Window</div></a>
         </dt>
-
         <dt id="acc-win-shortcut">
-            <a href="#"><img src="css/images/s.gif" />
+            <a href="#"><img src="resources/images/default/s.gif" />
             <div>Accordion Window</div></a>
         </dt>
 
@@ -94,17 +99,11 @@ if(!class_exists('desktop')) {
 <div id="ux-taskbar">
 	<div id="ux-taskbar-start"></div>
 	<div id="ux-taskbar-panel-wrap">
-
 		<div id="ux-quickstart-panel"></div>
 		<div id="ux-taskbuttons-panel"></div>
 	</div>
 	<div class="x-clear"></div>
 </div>
 
-<div id="ux-taskbar">
-	<div id="ux-taskbar-start"></div>
-	<div id="ux-taskbuttons-panel"></div>
-	<div class="x-clear"></div>
-</div>
 </body>
 </html>

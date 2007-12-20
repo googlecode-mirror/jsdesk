@@ -1,0 +1,40 @@
+.loading-indicator {
+    font-size:8pt;
+    background-image:url('../images/default/grid/loading.gif');
+    background-repeat: no-repeat;
+    background-position:top left;
+    padding-left:20px;
+	height:18px;
+	text-align:left;
+}
+#loading{
+	position:absolute;
+	left:45%;
+	top:40%;
+	border:1px solid #6593cf;
+	padding:2px;
+	background:#c3daf9;
+	width:150px;
+	text-align:center;
+	z-index:13999;
+}
+#loading .loading-indicator{
+	border:1px solid #a3bad9;
+	background:white url(../images/default/block-bg.gif) repeat-x;
+	color:#003366;
+	font:bold 13px tahoma,arial,helvetica;
+	padding:10px;
+	margin:0;
+}
+
+#loading-mask{
+	width:100%;height:100%;background:#c3daf9;position:absolute;z-index:13998;left:0;top:0;
+}
+
+.x-window-plain .x-window-body {
+    padding: 0 0 10px 0;
+}
+
+#loginPanel,#registerPanel{
+    margin: 10px 10px 0 15px;
+}
