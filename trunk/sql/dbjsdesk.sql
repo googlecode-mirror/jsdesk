@@ -14,6 +14,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 CREATE TABLE IF NOT EXISTS `desktop_config` (
   `member_id` int(11) unsigned NOT NULL default '0',
+  `autorun` text,
   `startmenu` text,
   `quickstart` text,
   `desktopcontextmenu` text,
@@ -28,8 +29,8 @@ CREATE TABLE IF NOT EXISTS `desktop_config` (
 -- ----------------------------
 -- Records
 -- ----------------------------
-INSERT INTO `desktop_config` VALUES ('0', '[\"docs-win\",\"grid-win\",\"tab-win\",\"bogus-menu\",\"acc-win\",\"layout-win\"]', '[\"docs-win\",\"grid-win\",\"tab-win\",\"acc-win\",\"layout-win\"]', '[\"preferences-win\"]', 'f9f9f9', 'Ladybuggin', 'center', 'Vista', 'false');
-INSERT INTO `desktop_config` VALUES ('3', null, '[\"mytest-win\",\"docs-win\",\"layout-win\",\"grid-win\",\"tab-win\",\"acc-win\",\"bogus-win\",\"preferences-win\"]', null, 'f9f9f9', 'Ladybuggin', 'center', 'Dark Gray', 'true');
+INSERT INTO `desktop_config` VALUES ('0', '[\"docs-win\"]','[\"docs-win\",\"grid-win\",\"tab-win\",\"bogus-menu\",\"acc-win\",\"layout-win\"]', '[\"docs-win\",\"grid-win\",\"tab-win\",\"acc-win\",\"layout-win\"]', '[\"preferences-win\"]', 'f9f9f9', 'Ladybuggin', 'center', 'Vista', 'false');
+INSERT INTO `desktop_config` VALUES ('3', '[\"docs-win\"]','[\"docs-win\",\"grid-win\",\"tab-win\",\"bogus-menu\",\"acc-win\",\"layout-win\"]', '[\"mytest-win\",\"docs-win\",\"layout-win\",\"grid-win\",\"tab-win\",\"acc-win\",\"bogus-win\",\"preferences-win\"]', '[\"preferences-win\"]', 'f9f9f9', 'Ladybuggin', 'center', 'Dark Gray', 'true');
 -- --------------------------------------------------------
 
 --
