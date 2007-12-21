@@ -23,11 +23,25 @@ Ext.extend(Ext.app.App, Ext.util.Observable, {
 	desktopConfig : null,
 
     initApp : function(){
+    
+      // prevent backspace (history -1) shortcut
+  		var map = new Ext.KeyMap(document, [
+  		{
+  			key: Ext.EventObject.BACKSPACE,
+  			stopEvent: true,
+  			fn: function(key, e){
+  				var t = e.target.tagName;
+  				if(t != "INPUT" && t != "TEXTAREA"){
+  					e.stopEvent();
+  				}
+  			}
+  		}]);
+		
     	this.startConfig = this.startConfig || this.getStartConfig();
-        this.desktop = new Ext.Desktop(this);
-		this.startMenu = this.desktop.taskbar.startMenu;
+      this.desktop = new Ext.Desktop(this);
+		  this.startMenu = this.desktop.taskbar.startMenu;
 
-		this.modules = this.getModules();
+		  this.modules = this.getModules();
         if(this.modules){
             this.initModules(this.modules);
             this.initDesktopConfig();
@@ -36,7 +50,7 @@ Ext.extend(Ext.app.App, Ext.util.Observable, {
         this.init();
 
         Ext.EventManager.on(window, 'beforeunload', this.onUnload, this);
-		this.fireEvent('ready', this);
+		  this.fireEvent('ready', this);
         this.isReady = true;
     },
 
@@ -56,6 +70,7 @@ Ext.extend(Ext.app.App, Ext.util.Observable, {
 			this.getDesktopConfig();
 		}else{
 			this.desktopConfig = o;
+			this.initAutoRun(o.autorun);
 			this.initDesktopContextMenu(o.desktopcontextmenu);
 			this.initStartMenu(o.startmenu);
 	        this.initQuickStart(o.quickstart);
@@ -63,6 +78,16 @@ Ext.extend(Ext.app.App, Ext.util.Observable, {
 		}
     },
     
+    initAutoRun : function(mIds){
+    	if(mIds){
+    		for(var i = 0, len = mIds.length; i < len; i++){
+	            var m = this.getModule(mIds[i]);
+	            if(m){
+	            	m.createWindow();
+	            }
+			}
+		}
+    },
     initDesktopContextMenu : function(mIds){
     	if(mIds){
     		for(var i = 0, len = mIds.length; i < len; i++){
@@ -81,20 +106,31 @@ Ext.extend(Ext.app.App, Ext.util.Observable, {
     },
     
     initStartMenu : function(mIds){
-    	if(mIds){
-    		for(var i = 0, iLen = mIds.length; i < iLen; i++){
+    	if(mIds){	        
+	        for(var i = 0, iLen = mIds.length; i < iLen; i++){
 				var m = this.getModule(mIds[i]);
 	            if(m){
-		            if(m.appType == 'menu'){ // handle menu modules
-		            	var items = m.items;
-		            	
-		            	for(var j = 0, jLen = items.length; j < jLen; j++){
-		            		m.launcher.menu.items.push(this.getModule(items[j]).launcher);
-		            	}
-		            }
-		            this.startMenu.add(m.launcher);
+	            	var app = this;
+	            	addItems(this.startMenu, m);
 				}
 	        }
+		}
+		
+		function addItems(menu, m){ // recursive function, allows sub menus
+			if(m.appType == 'menu'){
+				var items = m.items;
+
+				for(var j = 0, jLen = items.length; j < jLen; j++){
+					var item = app.getModule(items[j]);
+					if(item){
+						addItems(m.menu, item);
+					}
+				}
+
+			}
+			if(m.launcher){
+				menu.add(m.launcher);
+			}		
 		}
     },
 
@@ -120,7 +156,7 @@ Ext.extend(Ext.app.App, Ext.util.Observable, {
     getModule : function(name){
     	var ms = this.modules;
     	for(var i = 0, len = ms.length; i < len; i++){
-    		if(ms[i].id == name || ms[i].appType == name || ms[i].launcher.windowId == name){
+    		if(ms[i].id == name || ms[i].appType == name){
     			return ms[i];
 			}
         }

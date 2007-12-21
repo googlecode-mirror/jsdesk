@@ -8,7 +8,8 @@ MyDesktop.Preferences = Ext.extend(Ext.app.Module, {
 		'pref-win-card-1', // navigation
 		'pref-win-card-2', // quickstart
 		'pref-win-card-3', // color and appearance
-		'pref-win-card-4'  // wallpaper
+		'pref-win-card-4', // wallpaper
+		'pref-win-card-5', // autorun
 	],
 	contentPanel : null,
 	cardHistory : [
@@ -32,13 +33,18 @@ MyDesktop.Preferences = Ext.extend(Ext.app.Module, {
         this.win = desktop.getWindow('pref-win');
         
         if(!this.win){
-        	var winWidth = 595;
+        	var winWidth = 610;
 			var winHeight = 440;
 			
 			var navigation = new Ext.Panel({
 				bodyStyle: 'padding:15px',
 				border: false,
 				html: '<ul id="pref-nav-panel"> \
+						<li> \
+							<img src="'+Ext.BLANK_IMAGE_URL+'" class="icon-pref-autorun"/> \
+							<a id="viewAutoRun" href="#">Auto Run Apps</a><br /> \
+							<span>Choose which applications open automatically once logged in.</span> \
+						</li> \
 						<li> \
 							<img src="'+Ext.BLANK_IMAGE_URL+'" class="icon-pref-quickstart"/> \
 							<a id="viewQuickstart" href="#">Quick Start Apps</a><br /> \
@@ -58,6 +64,7 @@ MyDesktop.Preferences = Ext.extend(Ext.app.Module, {
 				id: 'pref-win-card-1'
 			});
 			
+			var autorun = MyDesktop.Preferences.AutoRun.init(this);
 			var quickstart = MyDesktop.Preferences.QuickStart.init(this);
 			var appearance = MyDesktop.Preferences.Appearance.init(this);
 			var wallpaper = MyDesktop.Preferences.Background.init(this);
@@ -68,6 +75,7 @@ MyDesktop.Preferences = Ext.extend(Ext.app.Module, {
 				id: 'pref-win-content',
 				items: [
                 	navigation,
+                	autorun,
                 	quickstart,
                 	appearance,
                 	wallpaper
@@ -151,6 +159,10 @@ MyDesktop.Preferences = Ext.extend(Ext.app.Module, {
     
     initActions : function(){
 		this.actions = {
+			'viewAutoRun' : function(app){
+				app.viewCard('pref-win-card-5');
+			},
+			
 			'viewQuickstart' : function(app){
 	    		app.viewCard('pref-win-card-2');
 	    	},
@@ -190,6 +202,7 @@ MyDesktop.Preferences = Ext.extend(Ext.app.Module, {
 			url: 'source/helpers/preferences/Preferences.php',
 			params: {
 				task: 'save',
+				autorun: Ext.encode(c.autorun),
 				backgroundcolor: c.styles.backgroundcolor,
 				quickstart: Ext.encode(c.quickstart),
 				theme: c.styles.theme,
@@ -225,18 +238,18 @@ MyDesktop.Preferences = Ext.extend(Ext.app.Module, {
 
 
 
-MyDesktop.Preferences.QuickStart = function(){
+MyDesktop.Preferences.AutoRun = function(){
 	var tree;
     
-	function inQuickStart(id, qsIds){
-		for(var i = 0, len = qsIds.length; i < len; i++){
-			if(id == qsIds[i]){
+	function isChecked(id, ids){
+		for(var i = 0, len = ids.length; i < len; i++){
+			if(id == ids[i]){
 				return true;
 			}
 		}
 	}
 			
-	function expandNodes(ms, qsIds){
+	function expandNodes(ms, ids){
 		var nodes = [];
 		
 		for(var i = 0, len = ms.length; i < len; i++){
@@ -245,11 +258,127 @@ MyDesktop.Preferences.QuickStart = function(){
 				/* nodes.push({
 					leaf: false,
 					text: o.text || o.menuText,
-					children: this.expandNodes(o.menu.items, qsIds)
+					children: this.expandNodes(o.menu.items, ids)
 				}); */
 			}else{
 				nodes.push({
-		           	checked: inQuickStart(ms[i].id, qsIds) ? true : false,
+		           	checked: isChecked(ms[i].id, ids) ? true : false,
+		           	iconCls: ms[i].launcher.iconCls,
+		           	id: ms[i].id,
+		           	leaf: true,
+		           	selected: true,
+		           	text: o.text || o.menuText
+				});
+			}
+		}
+		
+		return nodes;
+	}
+
+	function onCheckChange(node, checked){
+		if(node.leaf && node.id){
+    		if(checked){
+				this.app.desktopConfig.autorun.push(node.id);
+    		}else{
+				var ids = this.app.desktopConfig.autorun,
+					id = node.id,
+					i = 0;
+					
+				while(i < ids.length){
+					if(ids[i] == id){
+						ids.splice(i, 1);
+					}else{
+						i++;
+					}
+				}
+    		}
+    	}
+    	node.ownerTree.selModel.select(node);
+    }
+    
+    function onClose(){
+		this.owner.win.close();
+	}
+	
+    function onSave(){
+    	this.owner.save();
+    }
+	
+	return {
+		app : null,
+		owner : null,
+		
+		init : function(owner){
+			this.owner = owner;
+			this.app = owner.app;
+			
+			var ms = this.app.modules,
+				ids = this.app.desktopConfig.autorun,
+				nodes = expandNodes(ms, ids);
+				
+			tree = new Ext.tree.TreePanel({
+				autoScroll: true,
+				bodyStyle: 'padding:10px',
+				border: false,
+				buttons: [{
+					handler: onSave,
+					scope: this,
+					text: 'Save'
+				},{
+					handler: onClose,
+					scope: this,
+					text: 'Close'
+				}],
+				cls: 'pref-card pref-check-tree',
+				id: 'pref-win-card-5',
+				lines: false,
+				listeners: {
+					'checkchange': {
+						fn: onCheckChange,
+						scope: this
+					}
+				},
+				loader: new Ext.tree.TreeLoader(),
+				rootVisible: false,
+				root: new Ext.tree.AsyncTreeNode({
+					text: 'Auto Run Apps',
+					children: nodes
+				}),
+				title: 'Auto Run Apps'
+			});
+			
+			return tree;
+		}
+	};
+}();
+
+
+
+MyDesktop.Preferences.QuickStart = function(){
+	var tree;
+    
+	function isChecked(id, ids){
+		for(var i = 0, len = ids.length; i < len; i++){
+			if(id == ids[i]){
+				return true;
+			}
+		}
+	}
+			
+	function expandNodes(ms, ids){
+		var nodes = [];
+		
+		for(var i = 0, len = ms.length; i < len; i++){
+			var o = ms[i].launcher ? ms[i].launcher : ms[i];
+			if(o.menu){
+				/* nodes.push({
+					leaf: false,
+					text: o.text || o.menuText,
+					children: this.expandNodes(o.menu.items, ids)
+				}); */
+			}else{
+				nodes.push({
+		           	checked: isChecked(ms[i].id, ids) ? true : false,
 		           	iconCls: ms[i].launcher.iconCls,
 		           	id: ms[i].id,
 		           	leaf: true,
@@ -290,8 +419,8 @@ MyDesktop.Preferences.QuickStart = function(){
 			this.app = owner.app;
 			
 			var ms = this.app.modules,
-				qsIds = this.app.desktopConfig.quickstart,
-				nodes = expandNodes(ms, qsIds);
+				ids = this.app.desktopConfig.quickstart,
+				nodes = expandNodes(ms, ids);
 				
 			tree = new Ext.tree.TreePanel({
 				autoScroll: true,
@@ -306,7 +435,7 @@ MyDesktop.Preferences.QuickStart = function(){
 					scope: this,
 					text: 'Close'
 				}],
-				cls: 'pref-card',
+				cls: 'pref-card pref-check-tree',
 				id: 'pref-win-card-2',
 				lines: false,
 				listeners: {
@@ -404,8 +533,8 @@ MyDesktop.Preferences.Appearance = function(){
 
 			var tpl = new Ext.XTemplate(
 				'<tpl for=".">',
-					'<div class="bkview-thumb-wrap" id="{id}">',
-						'<div class="bkview-thumb"><img src="{thumbnail}" title="{id}"></div>',
+					'<div class="pref-view-thumb-wrap" id="{id}">',
+						'<div class="pref-view-thumb"><img src="{thumbnail}" title="{id}" /></div>',
 					'<span>{shortName}</span></div>',
 				'</tpl>',
 				'<div class="x-clear"></div>'
@@ -414,7 +543,7 @@ MyDesktop.Preferences.Appearance = function(){
 			view = new Ext.DataView({
 				autoHeight:true,
 				emptyText: 'No themes to display',
-				itemSelector:'div.bkview-thumb-wrap',
+				itemSelector:'div.pref-view-thumb-wrap',
 				loadingText: 'loading...',
 				singleSelect: true,
 				overClass:'x-view-over',
@@ -545,7 +674,7 @@ MyDesktop.Preferences.Background = function(){
 	}
     
     function onChangeBgColor(){
-    	//colorDialog.show();
+    	colorDialog.show();
     }
     
 	function onClose(){
@@ -562,14 +691,17 @@ MyDesktop.Preferences.Background = function(){
 	
 	function onSelectionChange(view, sel){
 		if(sel.length > 0){
-			var record = view.getRecord(sel[0]),
-				wallpaper = {
-					id: record.id,
-					path: record.data.path
-				};
+			var record = view.getRecord(sel[0]);
 			
-			if(this.app.desktopConfig.styles.wallpaper != wallpaper.id){
-				desktop.setWallpaper(wallpaper);
+			if(record && record.id && record.data.path){
+				var wallpaper = {
+						id: record.id,
+						path: record.data.path
+					};
+				
+				if(this.app.desktopConfig.styles.wallpaper != wallpaper.id){
+					desktop.setWallpaper(wallpaper);
+				}
 			}
 		}
 	}
@@ -588,7 +720,7 @@ MyDesktop.Preferences.Background = function(){
 			desktop = this.app.getDesktop();
 			
 			colorDialog = new Ext.ux.ColorDialog({
-				title: 'Pick Your Color',
+				title: 'Background Color',
 				closable: true,
 				closeAction: 'hide',
 				hsv: {
@@ -630,8 +762,8 @@ MyDesktop.Preferences.Background = function(){
 
 			var tpl = new Ext.XTemplate(
 				'<tpl for=".">',
-					'<div class="bkview-thumb-wrap" id="{id}">',
-						'<div class="bkview-thumb"><img src="{thumbnail}" title="{id}"></div>',
+					'<div class="pref-view-thumb-wrap" id="{id}">',
+						'<div class="pref-view-thumb"><img src="{thumbnail}" title="{id}" /></div>',
 					'<span>{shortName}</span></div>',
 				'</tpl>',
 				'<div class="x-clear"></div>'
@@ -640,7 +772,7 @@ MyDesktop.Preferences.Background = function(){
 			view = new Ext.DataView({
 				autoHeight:true,
 				emptyText: 'No wallpapers to display',
-				itemSelector:'div.bkview-thumb-wrap',
+				itemSelector:'div.pref-view-thumb-wrap',
 				loadingText: 'loading...',
 				singleSelect: true,
 				overClass:'x-view-over',
@@ -657,7 +789,7 @@ MyDesktop.Preferences.Background = function(){
 				border: false,
 				cls: 'pref-thumbnail-viewer',
 				collapsible: true,
-				id: 'BkView',
+				id: 'pref-wallpaper-view',
 				items: view,
 				title: 'Default Wallpapers',
 				titleCollapse: true

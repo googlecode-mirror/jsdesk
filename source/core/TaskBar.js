@@ -15,7 +15,7 @@ Ext.extend(Ext.ux.TaskBar, Ext.util.Observable, {
 			iconCls: 'user',
 			height: 300,
 			shadow: true,
-			title: 'Start',
+			title: 'Start', //get_cookie('memberName'),
 			width: 300
 		}, this.app.startConfig));
 		

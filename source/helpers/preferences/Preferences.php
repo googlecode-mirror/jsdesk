@@ -48,6 +48,7 @@ function save($member_id)
 			"update
 			desktop_config
 			set
+			autorun = '".$_POST["autorun"]."',
 			backgroundcolor = '".$_POST["backgroundcolor"]."',
 			quickstart = '".$_POST["quickstart"]."',
 			theme = '".$_POST["theme"]."',
@@ -61,6 +62,7 @@ function save($member_id)
 	{
 		$sql = "insert into desktop_config (
 			member_id,
+			autorun,
 			backgroundcolor,
 			quickstart,
 			theme,
@@ -69,6 +71,7 @@ function save($member_id)
 			wallpaperposition)
 			values (
 			".$member_id.",
+			'".$_POST["autorun"]."',
 			'".$_POST["backgroundcolor"]."',
 			'".$_POST["quickstart"]."',
 			'".$_POST["theme"]."',
