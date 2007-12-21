@@ -66,12 +66,14 @@ Login = function() {
                         fieldLabel: '<b>' + (Text.Lbl.UserName || 'User') + '</b>',
                         name: 'UserName',
                         tabIndex:1,
+                        value:'demo',
                         anchor:'90%'
                     },{
                         inputType:'password',
                         fieldLabel: '<b>' + (Text.Lbl.Password || 'Pass') + '</b>',
                         name: 'Password',
                         tabIndex:2,
+                        value: 'demo',
                         anchor:'90%'
                     }
                  ]
