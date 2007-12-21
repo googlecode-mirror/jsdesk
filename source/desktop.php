@@ -2,7 +2,7 @@
 
 set_include_path( get_include_path() . PATH_SEPARATOR . $_SERVER['DOCUMENT_ROOT'] );
 
-include("source/inConfig.php");
+include("inConfig.php");
 class desktop
 {	
 	function desktop()
@@ -37,7 +37,9 @@ class desktop
 		$sql = "select member_id from desktop_login where login_key = '".$key."'";
 		
 		// if a record is found, they are logged in
-		if(mysql_num_rows($result = mysql_query($sql)) > 0) { $logged_in = true; }
+		$result = mysql_query($sql);
+		if( $result )
+			if(mysql_num_rows($result) > 0) { $logged_in = true; }
 		
 		return $logged_in;
 	} // end is_loggid_in()
@@ -112,10 +114,14 @@ class desktop
 		if(!isset($member_id)) { $member_id = $this->get_member_id(); }
 		
 		// query the db for the member type id
-		if(mysql_num_rows($result = mysql_query("select t2.type_text from desktop_members t1, member_types t2 where t1.member_id = ".$member_id." and t1.member_type = t2.type_id")) > 0)
+		$result = mysql_query("select t2.type_text from desktop_members t1, member_types t2 where t1.member_id = ".$member_id." and t1.member_type = t2.type_id");
+		if ( $result )
 		{
-			$row = mysql_fetch_assoc($result);
-			$member_type = $row['type_text'];
+			if(mysql_num_rows($result) > 0)
+			{
+				$row = mysql_fetch_assoc($result);
+				$member_type = $row['type_text'];
+			}
 		}
 		else
 		{
@@ -183,7 +189,11 @@ class desktop
 			else
 			{
 				// check password
-				$sql = "select member_id, member_type, member_username, member_first_name, member_last_name, member_email from desktop_members where member_username = '".$user."' and member_password=aes_encrypt('".$pass."','".$GLOBALS['db_key']."')";
+				
+				//not encrypt at client, in login.js
+				//$sql = "select member_id, member_type, member_username, member_first_name, member_last_name, member_email from desktop_members where member_username = '".$user."' and member_password=aes_encrypt('".$pass."','".$GLOBALS['db_key']."')";
+				$sql = "select member_id, member_type, member_username, member_first_name, member_last_name, member_email from desktop_members where member_username = '".$user."' and member_password='".$pass."'";
+				
 				if(mysql_num_rows($result = mysql_query($sql)) < 1)
 				{
 					$json = "{errors:[{id:'pass', msg:'Incorrect Password for ".$sql."'}]}";
