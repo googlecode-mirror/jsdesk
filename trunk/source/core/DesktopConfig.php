@@ -5,6 +5,9 @@
  * {
  * 		'success': true,
  * 		'config': {
+ * 			'autorun': [
+ * 				'grid-win'
+ * 			], 
  * 			'desktopcontextmenu': [
  * 				'docs-win',
  * 				'preferences-win'
@@ -71,6 +74,7 @@ if(class_exists('desktop'))
 			// get defaults
 			$row = mysql_fetch_assoc($result);
 			
+			$autorun = $row["autorun"] != "" ? $row["autorun"] : "[]";
 			$backgroundcolor = $row["backgroundcolor"];
 			$desktopcontextmenu = $row["desktopcontextmenu"] != "" ? $row["desktopcontextmenu"] : "[]";
 			$quickstart = $row["quickstart"] != "" ? $row["quickstart"] : "[]";
@@ -85,6 +89,7 @@ if(class_exists('desktop'))
 			{
 				$row = mysql_fetch_assoc($result);
 				
+				$autorun = $row["autorun"] != "" ? $row["autorun"] : $autorun;
 				$backgroundcolor = $row["backgroundcolor"] != "" ? $row["backgroundcolor"] : $backgroundcolor;
 				$quickstart = $row["quickstart"] != "" ? $row["quickstart"] : $quickstart;
 				$theme = $row["theme"] != "" ? $row["theme"] : $theme;
@@ -97,6 +102,7 @@ if(class_exists('desktop'))
 			"{
 				'success': true,
 				'config': {
+				  'autorun': ".$autorun.",
 					'desktopcontextmenu': ".$desktopcontextmenu.",
 					'quickstart': ".$quickstart.",
 					'startmenu': ".$startmenu.",

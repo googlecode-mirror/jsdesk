@@ -14,6 +14,7 @@ MyDesktop = new Ext.app.App({
 			new MyDesktop.GridWindow(),
             new MyDesktop.TabWindow(),
             new MyDesktop.AccordionWindow(),
+            new MyDesktop.subSubMenu(),
             new MyDesktop.subMenu(),
             new MyDesktop.BogusModule(),
             new MyDesktop.Preferences()
@@ -62,6 +63,9 @@ MyDesktop = new Ext.app.App({
 		
 		/* can hard code the module id's
 		this.initDesktopConfig({
+		  'autorun' : [
+				'docs-win'
+			],
 			'desktopcontextmenu': [
 				'preferences-win'
     		],
@@ -428,11 +432,12 @@ MyDesktop.BogusModule = Ext.extend(Ext.app.Module, {
                 title: 'Bogus Window',
                 width:640,
                 height:480,
-                html : '<p>Something useful would be in here.</p><p>Something useful would be in here.</p><p>Something useful would be in here.</p><p>Something useful would be in here.</p><p>Something useful would be in here.</p><p>Something useful would be in here.</p><p>Something useful would be in here.</p><p>Something useful would be in here.</p><p>Something useful would be in here.</p><p>Something useful would be in here.</p><p>Something useful would be in here.</p><p>Something useful would be in here.</p><p>Something useful would be in here.</p><p>Something useful would be in here.</p>',
+                html : '<p><b>This window is not maximizable!</b></p><p>Something useful would be in here.</p><p>Something useful would be in here.</p><p>Something useful would be in here.</p><p>Something useful would be in here.</p><p>Something useful would be in here.</p><p>Something useful would be in here.</p><p>Something useful would be in here.</p><p>Something useful would be in here.</p><p>Something useful would be in here.</p><p>Something useful would be in here.</p><p>Something useful would be in here.</p><p>Something useful would be in here.</p><p>Something useful would be in here.</p><p>Something useful would be in here.</p>',
                 iconCls: 'bogus',
                 shim:false,
                 animCollapse:false,
-                constrainHeader:true
+                constrainHeader:true,
+                maximizable: false
             });
         }
         
@@ -442,14 +447,44 @@ MyDesktop.BogusModule = Ext.extend(Ext.app.Module, {
 
 
 
+MyDesktop.subSubMenu = Ext.extend(Ext.app.Module, {
+
+	appType : 'menu',
+	id : 'bogus-submenu',
+	
+	menu : new Ext.menu.Menu(),
+
+	/* Id's of modules to add to this menu,  can't hard code them in directly.
+	 * Desktop needs to initialize them first. */
+	items : [
+		'bogus-win'
+	],
+
+	init : function(){
+		this.launcher = {
+			text: 'Bogus Sub-menu',
+			iconCls: 'bogus',
+			handler: function(){
+				return false;
+			},
+			menu: this.menu
+		}
+	}
+});
+
+
+
 MyDesktop.subMenu = Ext.extend(Ext.app.Module, {
 
 	appType : 'menu',
 	id : 'bogus-menu',
+	
+	menu : new Ext.menu.Menu(),
 
-	// id's of modules to add to this menu,  can't hard code them in directly.
-	// desktop needs to initialize them first
+	/* id's of modules to add to this menu,  can't hard code them in directly.
+	 * desktop needs to initialize them first */
 	items : [
+		'bogus-submenu',
 		'bogus-win'
 	],
 
@@ -460,9 +495,9 @@ MyDesktop.subMenu = Ext.extend(Ext.app.Module, {
 			handler: function(){
 				return false;
 			},
-			menu: {
-				items: []
-			}
+			menu: this.menu
+
+
 		}
 	}
 });
