@@ -189,11 +189,12 @@ class desktop
 			else
 			{
 				// check password
-				
-				//not encrypt at client, in login.js
-				//$sql = "select member_id, member_type, member_username, member_first_name, member_last_name, member_email from desktop_members where member_username = '".$user."' and member_password=aes_encrypt('".$pass."','".$GLOBALS['db_key']."')";
-				$sql = "select member_id, member_type, member_username, member_first_name, member_last_name, member_email from desktop_members where member_username = '".$user."' and member_password='".$pass."'";
-				
+				// need to encrypt password (passwords are encrypted in database)
+				// must use SSL to keep secure on client side or implement a client encryption scheme to encrypt up to this point (not as secure)
+				if($user!='demo')   $cryptopass = "aes_encrypt('".$pass."','".$GLOBALS['db_key']."')";
+				else                $cryptopass = "'".$pass."'";
+				$sql = "select member_id, member_type, member_username, member_first_name, member_last_name, member_email from desktop_members where member_username = '".$user."' and member_password=".$cryptopass;
+
 				if(mysql_num_rows($result = mysql_query($sql)) < 1)
 				{
 					$json = "{errors:[{id:'pass', msg:'Incorrect Password for ".$sql."'}]}";
