@@ -23,7 +23,12 @@ Ext.Desktop = function(app){
 
     var windows = new Ext.WindowGroup();
     var activeWindow;
-		
+	
+    //liuliming--fisheyetoolbar
+    this.lmtaskbar = new Ext.ux.lmfisheyetoolbar(app);
+    var lmtaskbar = this.lmtaskbar;
+    //liuliming end
+    
     function minimizeWin(win){
         win.minimized = true;
         win.hide();
@@ -37,17 +42,31 @@ Ext.Desktop = function(app){
         activeWindow = win;
         Ext.fly(win.taskButton.el).addClass('active-win');
         win.minimized = false;
+        
+        //liuliming--fisheyetoolbar
+        lmtaskbar.setActiveButton(win.lmtaskButton);
+        Ext.fly(win.lmtaskButton).addClass('active-win');
+        //end of liuliming
     }
 
     function markInactive(win){
         if(win == activeWindow){
             activeWindow = null;
             Ext.fly(win.taskButton.el).removeClass('active-win');
+        
+             //liuliming--fisheyetoolbar
+            Ext.fly(win.lmtaskButton).removeClass('active-win');
+            //end of liuliming 
         }
     }
 
     function removeWin(win){
     	taskbar.removeTaskButton(win.taskButton);
+    	
+    	//liuliming--fisheyetoolbar
+        lmtaskbar.removeTaskButton(win.lmtaskButton);
+        //end of liuliming
+        
         layout();
     }
 
@@ -69,6 +88,10 @@ Ext.Desktop = function(app){
         win.render(desktopEl);
         win.taskButton = taskbar.addTaskButton(win);
 
+         //liuliming--fisheyetoolbar
+        win.lmtaskButton = lmtaskbar.addTaskButton(win);
+        //end of liuliming
+        
         win.cmenu = new Ext.menu.Menu({
             items: [
 
@@ -94,6 +117,11 @@ Ext.Desktop = function(app){
         		fn: removeWin
         	}
         });
+        
+        //liuliming--fisheyetoolbar
+        var top = this.lmtaskbar.barwindow.getSize().height * 2.2 ;
+        win.setPosition(200, top);
+        //end of liuliming
         
         layout();
         return win;
