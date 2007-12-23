@@ -29,12 +29,8 @@ echo '<title>'.$txtTitlePrefix.' | Desktop | '.$txtTitleSuffix.'</title>';
 <script type="text/javascript" src="js/ext/adapter/ext/ext-base.js"></script>
 <script type="text/javascript" src="js/ext/ext-all.js"></script>
 
-<script type="text/javascript" src="source/core/log4js.js"></script>
-<script type="text/javascript" >
-	
-	 var mylog = new Log(Log.DEBUG, Log.popupLogger);
-	 
-</script>
+
+
 <!-- LOGIN -->
 <script type="text/javascript" src="source/login/cookies.js"></script>
 <!--script type="text/javascript" src="js/ext/ux/Crypto/Ext.ux.Crypto.AES.js"></script-->
