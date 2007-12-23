@@ -188,7 +188,7 @@ Login = function() {
                     form.submit({
                         waitTitle: "Please Wait...",
                         waitMsg: "Validating Account...",
-                        url: '/source/login/register.php',
+                        url: 'source/login/register.php',
                         method: 'POST',
                         success:Login.Success,
                         scope:Login

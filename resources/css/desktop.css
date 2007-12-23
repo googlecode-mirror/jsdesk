@@ -910,13 +910,13 @@ td.ux-taskButtons-edge {
     display:block;
     color:white;
     text-decoration:none;
+    cursor: default;
 }
 #x-shortcuts dt div {
     width:100%;
     color:#000;
     overflow:hidden;
     text-overflow:ellipsis;
-    cursor:pointer;
 }
 .ext-ie #x-shortcuts dt img {
     background:transparent !important;
@@ -931,6 +931,7 @@ td.ux-taskButtons-edge {
     background-image: url(../images/default/icons/grid48x48.png);
     filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='resources/images/default/icons/grid48x48.png', sizingMethod='scale');
 }
+
 #acc-win-shortcut img {
     width:48px;
     height:48px;
