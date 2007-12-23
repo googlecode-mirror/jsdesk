@@ -1,0 +1,496 @@
+/*--------------------------------------------------------------------------
+ * Basic fisheye contributed by Ronald van Raaphorst
+ * 
+ * Modified for Ext by Matjaž Lipuš
+ * 
+ * Fisheye css
+ 
+ 
+ .fisheye
+ //height: 100%;
+	width: 100%;
+ *--------------------------------------------------------------------------*/
+
+
+.ux-lmtaskbutton-strip {
+	position: relative;
+	text-align: center;
+	
+	border: 0px ;
+	padding: 0;
+	
+	background:transparent no-repeat;
+	
+	list-style-position:inside;
+}
+
+	.ux-lmtaskbutton-strip ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		height: 100px;
+		width:100px;
+		background:transparent no-repeat;
+	}
+
+		.ux-lmtaskbutton-strip ul li {
+			position: absolute;
+			display: block;
+			float: left;
+			top: 0px; 
+			left: 0;
+			right: 0;
+			margin-left: 0;
+			margin-right: 0;
+			background:transparent no-repeat;
+		}
+
+		.ux-lmtaskbutton-strip ul li a {
+			text-decoration: none;
+			background:transparent no-repeat;
+		}
+
+			.ux-lmtaskbutton-strip ul li a img {
+				position:absolute;;
+				border: 0;
+				vertical-align: top;
+				background:transparent no-repeat;
+			}
+
+			.ux-lmtaskbutton-strip ul li a span {
+				position: absolute;
+				text-align: center;;
+				width: 79px;
+				padding: 1px;
+				margin: 0;
+				border: solid 1px #bbb;	
+				left:0px;
+				background:transparent no-repeat;
+			}
+
+
+.fisheye {
+	position: relative;
+	text-align: center;
+	
+	border: 0px ;
+	padding: 0;
+	
+	background:transparent;
+}
+
+	.fisheye ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		height: 81px;
+		background:transparent;
+	}
+
+		.fisheye ul li {
+			position: absolute;
+			display: block;
+			float: left;
+			top: 5px; 
+			left: 0;
+			right: 0;
+			margin-left: 0;
+			margin-right: 0;
+			background:transparent;
+		}
+
+		.fisheye ul li a {
+			text-decoration: none;
+			background:transparent;
+		}
+
+			.fisheye ul li a img {
+				position: absolute;
+				border: 0;
+				vertical-align: top;
+				background:transparent;
+			}
+
+			.fisheye ul li a span {
+				position:relative;;
+				text-align: left;
+				width: 206px;
+				padding: 1px;
+				margin: 0;
+				border: solid 0px #bbb;	
+				
+				left:-60px;
+				background:transparent;
+				font-weight:bold;
+				font-size:large;
+			}
+
+
+.x-lmtoolbar-window-header-text {
+	cursor:default;
+	background:transparent;
+	height:12px;
+}
+
+.x-lmtoolbar-window-footer {
+    padding-bottom:6px;
+    zoom:1;
+    font-size:0;
+    line-height:0;
+	background:transparent;
+}
+.x-lmtoolbar-window-header {
+	color:#f1f1f1;
+	font:bold 11px tahoma,arial,verdana,sans-serif;
+    padding:0px 0 0px 0;
+	background:transparent;
+	height:12px;
+}
+
+.x-lmtoolbar-window-maximized .x-window-bc {
+	height:0;
+	background:transparent;
+}
+
+.x-lmtoolbar-window-body p,.x-panel-body p {
+	padding: 0px;
+	margin: 0;
+	background:transparent;
+	opacity:.0;
+}
+
+/* fix for scrolling issue in firefox */
+.x-lmtoolbar-window-mc {
+	/*background:#ffffff none;*/
+	border:0px solid #000000;
+	background:transparent;
+}
+/**/
+/*
+ * begin window
+ */
+.x-lmtoolbar-tool {
+	background-image:url(images/window/tool-sprites.gif);
+	background:transparent;
+	
+}
+.x-lmtoolbar-window-tl .x-lmtoolbar-window-header {
+	color:#222;
+	background:transparent;
+	
+}
+.x-lmtoolbar-window-tl {
+	/*background: transparent url(images/window/left-corners.gif) no-repeat 0 0;*/
+	padding-left:6px;
+    zoom:1;
+    z-index:1;
+    position:relative;
+	background:transparent;
+}
+.x-lmtoolbar-window-tc {
+	/*background: transparent url(images/window/top-bottom.gif) repeat-x 0 0;*/
+	overflow:hidden;
+    zoom:1;
+	background:transparent;
+}
+.x-lmtoolbar-window-tr {
+	/*background: transparent url(images/window/right-corners.gif) no-repeat right 0;*/
+	padding-right:6px;
+	background:transparent;
+}
+.x-lmtoolbar-window-bl {
+	/*background: transparent url(images/window/left-corners.gif) no-repeat 0 bottom;*/
+	padding-left:6px;
+    zoom:1;
+	background:transparent;
+}
+.x-lmtoolbar-window-bc {
+	/*background: transparent url(images/window/top-bottom.gif) repeat-x 0 bottom;*/
+    zoom:1;
+	background:transparent;
+}
+.x-lmtoolbar-window-br {
+	/*background: transparent url(images/window/right-corners.gif) no-repeat right bottom;*/
+	padding-right:6px;
+    zoom:1;
+	background:transparent;
+}
+.x-lmtoolbar-window-ml {
+	/*background: transparent url(images/window/left-right.gif) repeat-y 0 0;*/
+	padding-left:6px;
+    zoom:1;
+	background:transparent;
+}
+.x-lmtoolbar-window-mr {
+	/*background: transparent url(images/window/left-right.gif) repeat-y right 0;*/
+	padding-right:6px;
+    zoom:1;
+	background:transparent;
+}
+.x-lmtoolbar-window-mc {
+	border:0px solid #d0dce3;
+	background:transparent;
+}
+.x-lmtoolbar-window-body {
+	border:0px solid #222;
+	background:transparent;
+	padding: 0px;
+	margin: 0;
+	background:transparent;
+}
+
+.x-lmtoolbar-window-maximized .x-lmtoolbar-window-mc {
+	border-bottom:0 none !important;
+	border-left:0 none !important;
+	border-right:0 none !important;
+}
+.x-lmtoolbar-window-proxy {
+	/*background:#333 none;*/
+	background:transparent;
+}
+.x-lmtoolbar-panel-ghost {
+    background:transparent;
+    z-index:12000;
+    overflow:hidden;
+    position:absolute;
+    left:0;top:0;
+    opacity:.0;
+    -moz-opacity:.0;
+    filter:alpha(opacity=0);
+}
+.x-lmtoolbar-panel-ghost .x-lmtoolbar-window-tl {
+    border-bottom:0px solid #222;
+	background:transparent;
+}
+.x-lmtoolbar-panel-ghost ul {
+    border:0px solid #222;
+    border-top:0 none;
+	background:transparent;
+}
+/*
+ * End window
+ */
+ 
+ 
+ /* task button */
+
+.ux-lmtaskbutton-center {
+	background-position: center;
+	background-repeat: no-repeat;
+	height: 16px;
+	width: 16px;
+	cursor:pointer;
+	white-space: nowrap;
+    padding:0;
+}
+
+.ux-lmtaskbutton-center{
+	padding:1px;
+}
+
+.ux-lmtaskbutton-center{
+	background-position: 0 6px;
+	background-repeat: no-repeat;
+	padding:7px 0px 7px 20px;
+}
+
+
+.ux-lmtaskbutton-left, .ux-lmtaskbutton-right{
+	font-size:1px;
+    line-height:1px;
+}
+.ux-lmtaskbutton-left{
+	width:4px;
+	height:28px;
+	background:url(../../../resouce/images/default/taskbar/taskbutton.gif) no-repeat 0 0;
+}
+.ux-lmtaskbutton-right{
+	width:4px;
+	height:28px;
+	background:url(../../../resouce/images/default/taskbar/taskbutton.gif) no-repeat 0 -28px;
+}
+.ux-lmtaskbutton-left i, .ux-lmtaskbutton-right i{
+	display:block;
+    width:4px;
+    overflow:hidden;
+    font-size:1px;
+    line-height:1px;
+}
+.ux-lmtaskbutton-center{
+	background:url(../../../resouce/images/default/taskbar/taskbutton.gif) repeat-x 0 -56px;
+	vertical-align: middle;
+	text-align:center;
+	padding:0 5px;
+	cursor:pointer;
+	white-space:nowrap;
+}
+
+.ux-lmtaskbutton-left{ 
+	background-position:0 0;
+}
+.ux-lmtaskbutton-right{
+	background-position:0 -28px;
+}
+.ux-lmtaskbutton-center{
+	background-position:0 -56px;
+}
+
+.ux-lmtaskbutton-left{
+	background-position:0 -252px;
+}
+.ux-lmtaskbutton-right{
+	background-position:0 -280px;
+}
+.ux-lmtaskbutton-center{
+	background-position:0 -308px;
+}
+
+.ux-lmtaskbutton-left{
+	background-position:0 -168px;
+}
+.ux-lmtaskbutton-right{
+	background-position:0 -196px;
+}
+ux-lmtaskbutton-center{
+	background-position:0 -224px;
+}
+
+.ux-lmtaskbutton-left{
+	background-position:0 -84px;
+}
+.ux-lmtaskbutton-right{
+	background:url(../../../resouce/images/default/taskbar/taskbutton.gif) no-repeat 0 -112px;
+}
+.ux-lmtaskbutton-center{
+	background:url(../../../resouce/images/default/taskbar/taskbutton.gif) repeat-x 0 -140px;
+}
+.ux-lmtaskbutton-center button {
+    color:#fff;
+}
+
+/*end of task button*/
+
+
+#ux-lmtaskbuttons-panel {
+	background:transparent url(../../../resouce/images/default/taskbar/taskbuttons-panel-bg.gif) repeat-x left top;
+	padding-top:0;
+	position:relative;
+}
+
+/**/
+.ux-lmtaskbutton-strip-wrap {
+	/* overflow:hidden;
+	position:relative;
+	width:100%; */
+	
+	width:100%;
+    overflow:hidden;
+    position:relative;
+    zoom:1;
+}
+
+ul.ux-lmtaskbutton-strip {
+	display:block;
+	width:5000px;
+    zoom:1;
+}
+
+ul.ux-lmtaskbutton-strip li {
+    float:left;
+    margin-left:2px;
+}
+
+
+ul.ux-lmtaskbutton-strip li.ux-lmtaskbutton-edge {
+    float:left;
+    margin:0 !important;
+    padding:0 !important;
+    border:0 none !important;
+    font-size:1px !important;
+    line-height:1px !important;
+    overflow:hidden;
+    zoom:1;
+    background:transparent !important;
+    width:1px;
+}
+
+
+.x-lmtaskbutton-scrolling {
+	position:relative;
+}
+
+.x-lmtaskbutton-scrolling .ux-lmtaskbutton-strip-wrap {
+	margin-left:18px;
+	margin-right:18px;
+}
+td.ux-lmtaskbutton-edge {
+    /*float:left;*/
+    margin:0 !important;
+    padding:0 !important;
+    border:0 none !important;
+    font-size:1px !important;
+    line-height:1px !important;
+    overflow:hidden;
+    zoom:1;
+    background:transparent !important;
+    width:1px;
+}
+.ux-lmtaskbutton-scroller-left {
+    background: transparent url(../../../resouce//images/default/taskbar/scroll-left.gif) no-repeat -18px 0;
+    width:18px;
+    position:absolute;
+    left:1px;
+    top:0px;
+    z-index:10;
+    cursor:pointer;
+}
+.ux-lmtaskbutton-scroller-left-over {
+    background-position: 0 0;
+}
+.ux-lmtaskbutton-scroller-left-disabled {
+    background-position: -18px 0;
+    opacity:.0;
+    -moz-opacity:.0;
+    filter:alpha(opacity=0);
+    cursor:default;
+}
+.ux-lmtaskbutton-scroller-right {
+    background: transparent url(../../../resouce//images/default/taskbar/scroll-right.gif) no-repeat 0 0;
+    width:18px;
+    position:absolute;
+    right:0;
+    top:0px;
+    z-index:10;
+    cursor:pointer;
+}
+.ux-lmtaskbutton-scroller-right-over {
+    background-position: -18px 0;
+}
+.ux-lmtaskbutton-scroller-right-disabled {
+    background-position: 0 0;
+    opacity:.0;
+    -moz-opacity:.0;
+    filter:alpha(opacity=0);
+    cursor:default;
+}
+.x-btn-text-icon-lm 
+{
+background-position:0 2px;
+height:53px;
+width:53px;
+background-repeat:no-repeat;
+padding-left:18px;
+padding-top:33px;
+padding-bottom:2px;
+padding-right:0;
+font-size:larger;
+outline:none;
+border-bottom:none;
+border-top:none;
+border-right:none;
+border-left:none;
+}
+
+.x-btn-text-icon-lm .x-btn-with-menu .x-btn-center em{display:block;background:transparent url(../images/default/toolbar/btn-arrow.gif) no-repeat right 3px;padding-right:10px;}
+
+

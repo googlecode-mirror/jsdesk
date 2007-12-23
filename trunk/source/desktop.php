@@ -1,6 +1,8 @@
 <?php
 
-set_include_path( get_include_path() . PATH_SEPARATOR . $_SERVER['DOCUMENT_ROOT'] );
+//this line has little problem, not all users put jsdesk at $_SERVER['DOCUMENT_ROOT']
+//let's use relative path
+//set_include_path( get_include_path() . PATH_SEPARATOR . $_SERVER['DOCUMENT_ROOT'] );
 
 include("inConfig.php");
 class desktop
