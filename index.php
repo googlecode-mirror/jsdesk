@@ -29,6 +29,12 @@ echo '<title>'.$txtTitlePrefix.' | Desktop | '.$txtTitleSuffix.'</title>';
 <script type="text/javascript" src="js/ext/adapter/ext/ext-base.js"></script>
 <script type="text/javascript" src="js/ext/ext-all.js"></script>
 
+<script type="text/javascript" src="source/core/log4js.js"></script>
+<script type="text/javascript" >
+	
+	 var mylog = new Log(Log.DEBUG, Log.popupLogger);
+	 
+</script>
 <!-- LOGIN -->
 <script type="text/javascript" src="source/login/cookies.js"></script>
 <!--script type="text/javascript" src="js/ext/ux/Crypto/Ext.ux.Crypto.AES.js"></script-->
@@ -36,6 +42,12 @@ echo '<title>'.$txtTitlePrefix.' | Desktop | '.$txtTitleSuffix.'</title>';
 <!-- DESKTOP STYLES -->
 <link rel="stylesheet" type="text/css" href="resources/css/desktop.css" />
 <link rel="stylesheet" type="text/css" href="source/helpers/preferences/preferences.css" />
+
+<!-- fisheye -->
+<link href="source/modules/lmtoolbar/fisheye.css" type="text/css" rel="stylesheet"/>
+<script src="source/modules/lmtoolbar/fisheye.js" type="text/javascript"></script>
+<script src="source/modules/lmtoolbar/lmtoolbar.js" type="text/javascript"></script>
+
 
 <!-- THEME -->
 <link id="theme" rel="stylesheet" type="text/css" href="resources/themes/xtheme-vista/css/xtheme-vista.css" />
@@ -93,8 +105,13 @@ if(!class_exists('desktop')) {
             <a href="#"><img src="resources/images/default/s.gif" />
             <div>Accordion Window</div></a>
         </dt>
-
+		
     </dl>
+	<dl id="x-toolbars">
+		<dt id="toolbar2">
+	          
+	    </dt>
+	</dl>
 </div>
 <div id="ux-taskbar">
 	<div id="ux-taskbar-start"></div>
