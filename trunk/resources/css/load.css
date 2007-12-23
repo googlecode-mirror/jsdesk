@@ -38,3 +38,8 @@
 #loginPanel,#registerPanel{
     margin: 10px 10px 0 15px;
 }
+
+/* fix combo lists from hiding under dialogs and masks */
+.x-combo-list{
+    z-index: 35000;
+}

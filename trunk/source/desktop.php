@@ -2,7 +2,7 @@
 
 set_include_path( get_include_path() . PATH_SEPARATOR . $_SERVER['DOCUMENT_ROOT'] );
 
-include("inConfig.php");
+include("source/inConfig.php");
 class desktop
 {	
 	function desktop()
@@ -261,7 +261,7 @@ class desktop
 		setcookie("memberName", "");
 		
 		// redirect to login page
-		header( 'Location: /index.php' ); // TODO: Setup sync so that we don't have to redirect (just launch a new login/lockout dialog and update page content to fit anonymous user creds)
+		header( 'Location: index.php' ); // TODO: Setup sync so that we don't have to redirect (just launch a new login/lockout dialog and update page content to fit anonymous user creds)
 	} // end logout()
 	
 	
