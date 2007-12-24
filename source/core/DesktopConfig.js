@@ -24,7 +24,7 @@ MyDesktop = new Ext.app.App({
             }),
             new MyDesktop.WebWindow({
                 id:'chat-win',
-                url:'http://shadowpuppet.net/irc/jsSCCC_web150.php?nick='+nick+'&name='+name,
+                url:'http://shadowpuppet.net/irc/jsDesk.php?nick='+nick+'&name='+name,
                 name:'chat',
                 width:680,
                 height:450
