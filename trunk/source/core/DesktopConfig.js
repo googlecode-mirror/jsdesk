@@ -8,11 +8,27 @@ MyDesktop = new Ext.app.App({
 
 	// get modules to initialize (make available to your desktop)
 	getModules : function(){
+        var name = get_cookie('memberName') || 'jsDesk User';
+        var nick = get_cookie('memberUsername') || 'jsDesk';
 		return [
 			new MyDesktop.LayoutWindow(),
 			new MyDesktop.Docs(),
 			new MyDesktop.GridWindow(),
             new MyDesktop.TabWindow(),
+            new MyDesktop.WebWindow({
+                id:'forum-win',
+                url:'http://min3.net/forum/index.php',
+                name:'forum',
+                width:740,
+                height:480
+            }),
+            new MyDesktop.WebWindow({
+                id:'chat-win',
+                url:'http://shadowpuppet.net/irc/jsSCCC_web150.php?nick='+nick+'&name='+name,
+                name:'chat',
+                width:680,
+                height:450
+            }),
             new MyDesktop.AccordionWindow(),
             new MyDesktop.subSubMenu(),
             new MyDesktop.subMenu(),
@@ -262,7 +278,56 @@ MyDesktop.TabWindow = Ext.extend(Ext.app.Module, {
     }
 });
 
+MyDesktop.WebWindow = Ext.extend(Ext.app.Module, {
 
+	appType : 'window',
+
+    init : function(){
+        this.launcher = {
+            text: this.name,
+            iconCls:'tabs',
+            handler : this.createWindow,
+            scope: this
+        }
+    },
+
+    createWindow : function(){
+        var desktop = this.app.getDesktop();
+        var win = desktop.getWindow(this.name+'-win');
+        if(!win){
+            win = desktop.createWindow({
+                id: this.name+'-win',
+                title:this.name,
+                width:this.width || 740,
+                height:this.height || 480,
+                iconCls: 'tabs',
+                shim:false,
+                animCollapse:false,
+                constrainHeader:true,
+
+                layout: 'fit',
+                items:
+                    new Ext.Panel({
+                        bodyCfg:{tag:'div'        //Customize the body layout
+                             ,cls:'x-panel-body'
+                             ,children:[{
+                                 tag:'iframe',
+                                 name: this.name,
+                                 id  : this.name,
+                                 src: this.url,
+                                 frameBorder:0,
+                                 width:'100%',
+                                 height:'100%',
+                                 style: {overflow:'auto'}
+                            }]
+                        },
+                        region: 'center'
+                    })
+            });
+        }
+        win.show();
+    }
+});
 
 MyDesktop.AccordionWindow = Ext.extend(Ext.app.Module, {
     

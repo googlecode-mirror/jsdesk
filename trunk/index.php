@@ -97,9 +97,17 @@ if(!class_exists('desktop')) {
             <a href="#"><img src="resources/images/default/s.gif" />
             <div>Grid Window</div></a>
         </dt>
+        <dt id="forum-win-shortcut">
+            <a href="#"><img src="resources/images/default/s.gif" />
+            <div>Forum</div></a>
+        </dt>
+        <dt id="chat-win-shortcut">
+            <a href="#"><img src="resources/images/default/s.gif" />
+            <div>IRC</div></a>
+        </dt>
         <dt id="acc-win-shortcut">
             <a href="#"><img src="resources/images/default/s.gif" />
-            <div>Accordion Window</div></a>
+            <div>Accordion Window Demo</div></a>
         </dt>
 		
     </dl>

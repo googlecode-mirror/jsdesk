@@ -932,7 +932,14 @@ td.ux-taskButtons-edge {
     filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='resources/images/default/icons/grid48x48.png', sizingMethod='scale');
 }
 
-#acc-win-shortcut img {
+#forum-win-shortcut img {
+    width:48px;
+    height:48px;
+    background-image: url(../images/icons/127.png);
+    filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='resources/images/icons/127.png', sizingMethod='scale');
+}
+
+#acc-win-shortcut img, #chat-win-shortcut img {
     width:48px;
     height:48px;
     background-image: url(../images/default/icons/im48x48.png);
