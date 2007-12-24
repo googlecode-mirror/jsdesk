@@ -29,11 +29,9 @@ CREATE TABLE IF NOT EXISTS `desktop_config` (
 -- ----------------------------
 -- Records
 -- ----------------------------
-INSERT INTO `desktop_config` VALUES ('0', '[\"docs-win\"]','[\"docs-win\",\"grid-win\",\"tab-win\",\"bogus-menu\",\"acc-win\",\"layout-win\"]', '[\"docs-win\",\"grid-win\",\"tab-win\",\"acc-win\",\"layout-win\"]', '[\"preferences-win\"]', 'f9f9f9', 'Ladybuggin', 'center', 'Vista', 'false');
-INSERT INTO `desktop_config` VALUES ('3', '[\"docs-win\"]','[\"docs-win\",\"grid-win\",\"tab-win\",\"bogus-menu\",\"acc-win\",\"layout-win\"]', '[\"mytest-win\",\"docs-win\",\"layout-win\",\"grid-win\",\"tab-win\",\"acc-win\",\"bogus-win\",\"preferences-win\"]', '[\"preferences-win\"]', 'f9f9f9', 'Ladybuggin', 'center', 'Dark Gray', 'true');
-INSERT INTO `desktop_themes` VALUES ('Vista-black', 'resources/themes/xtheme-vista-black/xtheme-vista.png', 'resources/themes/xtheme-vista-black/vista-black.css');
-INSERT INTO `desktop_themes` VALUES ('Vista-clear', 'resources/themes/xtheme-vista-clear/xtheme-vista.png', 'resources/themes/xtheme-vista-clear/vista-clear.css');
-INSERT INTO `desktop_themes` VALUES ('Windows-blue', 'resources/themes/xtheme-windows-blue/xtheme-vista.png', 'resources/themes/xtheme-windows-blue/windows-blue.css');
+INSERT INTO `desktop_config` VALUES ('0', '[\"docs-win\",\"grid-win\",\"tab-win\",\"bogus-menu\",\"acc-win\",\"layout-win\"]','[\"docs-win\",\"grid-win\",\"tab-win\",\"bogus-menu\",\"acc-win\",\"layout-win\"]', '[\"docs-win\",\"grid-win\",\"tab-win\",\"acc-win\",\"layout-win\"]', '[\"preferences-win\"]', 'f9f9f9', 'Beauty1', 'center', 'Vista', 'false');
+INSERT INTO `desktop_config` VALUES ('3', '[\"docs-win\",\"grid-win\",\"tab-win\",\"bogus-menu\",\"acc-win\",\"layout-win\"]','[\"docs-win\",\"grid-win\",\"tab-win\",\"bogus-menu\",\"acc-win\",\"layout-win\"]', '[\"mytest-win\",\"docs-win\",\"layout-win\",\"grid-win\",\"tab-win\",\"acc-win\",\"bogus-win\",\"preferences-win\"]', '[\"preferences-win\"]', 'f9f9f9', 'Beauty1', 'center', 'Dark Gray', 'true');
+
 -- --------------------------------------------------------
 
 --
@@ -118,7 +116,9 @@ INSERT INTO `desktop_themes` VALUES ('Olive', 'resources/themes/xtheme-olive/xth
 INSERT INTO `desktop_themes` VALUES ('Purple', 'resources/themes/xtheme-purple/xtheme-purple.png', 'resources/themes/xtheme-purple/css/xtheme-purple.css');
 INSERT INTO `desktop_themes` VALUES ('Slate', 'resources/themes/xtheme-slate/xtheme-slate.png', 'resources/themes/xtheme-slate/css/xtheme-slate.css');
 INSERT INTO `desktop_themes` VALUES ('Vista', 'resources/themes/xtheme-vista/xtheme-vista.png', 'resources/themes/xtheme-vista/css/xtheme-vista.css');
-
+INSERT INTO `desktop_themes` VALUES ('Vista-black', 'resources/themes/xtheme-vista-black/xtheme-vista.png', 'resources/themes/xtheme-vista-black/vista-black.css');
+INSERT INTO `desktop_themes` VALUES ('Vista-clear', 'resources/themes/xtheme-vista-clear/xtheme-vista.png', 'resources/themes/xtheme-vista-clear/vista-clear.css');
+INSERT INTO `desktop_themes` VALUES ('Windows-blue', 'resources/themes/xtheme-windows-blue/xtheme-vista.png', 'resources/themes/xtheme-windows-blue/windows-blue.css');
 
 
 
