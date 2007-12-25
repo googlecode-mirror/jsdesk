@@ -147,3 +147,17 @@ INSERT INTO `desktop_wallpapers` VALUES ('Beauty6', 'resources/wallpapers/thumbn
 INSERT INTO `desktop_wallpapers` VALUES ('Beauty7', 'resources/wallpapers/thumbnails/beauty7.jpg', 'resources/wallpapers/beauty7.jpg');
 INSERT INTO `desktop_wallpapers` VALUES ('Beauty8', 'resources/wallpapers/thumbnails/beauty8.jpg', 'resources/wallpapers/beauty8.jpg');
 INSERT INTO `desktop_wallpapers` VALUES ('Beauty9', 'resources/wallpapers/thumbnails/beauty9.jpg', 'resources/wallpapers/beauty9.jpg');
+INSERT INTO `desktop_wallpapers` VALUES ('Curls On Green', 'resources/wallpapers/thumbnails/curls-on-green.jpg', 'resources/wallpapers/curls-on-green.jpg');
+INSERT INTO `desktop_wallpapers` VALUES ('Emotion', 'resources/wallpapers/thumbnails/emotion.jpg', 'resources/wallpapers/emotion.jpg');
+INSERT INTO `desktop_wallpapers` VALUES ('Eos', 'resources/wallpapers/thumbnails/eos.jpg', 'resources/wallpapers/eos.jpg');
+INSERT INTO `desktop_wallpapers` VALUES ('Fields of Peace', 'resources/wallpapers/thumbnails/fields-of-peace.jpg', 'resources/wallpapers/fields-of-peace.jpg');
+INSERT INTO `desktop_wallpapers` VALUES ('Fresh Morning', 'resources/wallpapers/thumbnails/fresh-morning.jpg', 'resources/wallpapers/fresh-morning.jpg');
+INSERT INTO `desktop_wallpapers` VALUES ('Ladybuggin', 'resources/wallpapers/thumbnails/ladybuggin.jpg', 'resources/wallpapers/ladybuggin.jpg');
+INSERT INTO `desktop_wallpapers` VALUES ('Summer', 'resources/wallpapers/thumbnails/summer.jpg', 'resources/wallpapers/summer.jpg');
+INSERT INTO `desktop_wallpapers` VALUES ('Dead Rat', 'resources/wallpapers/thumbnails/DeadRat.jpg', 'resources/wallpapers/DeadRat.jpg');
+INSERT INTO `desktop_wallpapers` VALUES ('Blue', 'resources/wallpapers/thumbnails/blue.jpg', 'resources/wallpapers/blue.jpg');
+INSERT INTO `desktop_wallpapers` VALUES ('Blue Desk 1', 'resources/wallpapers/thumbnails/desk.jpg', 'resources/wallpapers/desk.jpg');
+INSERT INTO `desktop_wallpapers` VALUES ('Blue Desk 2', 'resources/wallpapers/thumbnails/desktop.jpg', 'resources/wallpapers/desktop.jpg');
+INSERT INTO `desktop_wallpapers` VALUES ('Blue Desk 3', 'resources/wallpapers/thumbnails/desktop2.jpg', 'resources/wallpapers/desktop2.jpg');
+INSERT INTO `desktop_wallpapers` VALUES ('Elevator Shaft', 'resources/wallpapers/thumbnails/Structure-ElevatorShaft-7.jpg', 'resources/wallpapers/Structure-ElevatorShaft-7.jpg');
+INSERT INTO `desktop_wallpapers` VALUES ('Sound Board', 'resources/wallpapers/thumbnails/TripleDoor-SoundBoard-L.jpg', 'resources/wallpapers/TripleDoor-SoundBoard-L.jpg');
