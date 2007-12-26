@@ -12,6 +12,17 @@
  *--------------------------------------------------------------------------*/
 
 
+.lmtoolbarstartbtn {
+	position: relative;
+	text-align: center;
+	
+	border: 0px ;
+	padding: 0;
+	width:36px;
+	background:transparent no-repeat;
+	
+	list-style-position:inside;
+}
 .ux-lmtaskbutton-strip {
 	position: relative;
 	text-align: center;
