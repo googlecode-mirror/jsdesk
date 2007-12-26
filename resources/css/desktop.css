@@ -297,6 +297,13 @@ html, body {
     background-image:url(../images/default/icons/tabs.gif) !important;
 }
 
+.chat {
+    background-image:url(../images/icons/fam/user_comment.png) !important;
+}
+
+.forum {
+    background-image:url(../images/icons/fam/vcard.png) !important;
+}
 /* IM window icons */
 
 .user {

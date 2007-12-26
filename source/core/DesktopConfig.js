@@ -18,7 +18,8 @@ MyDesktop = new Ext.app.App({
             new MyDesktop.WebWindow({
                 id:'forum-win',
                 url:'http://min3.net/forum/index.php',
-                name:'forum',
+                name:'Forum',
+                iconCls:'forum',
                 width:740,
                 height:480
             }),
@@ -26,6 +27,7 @@ MyDesktop = new Ext.app.App({
                 id:'chat-win',
                 url:'http://shadowpuppet.net/irc/jsDesk.php?nick='+nick+'&name='+name,
                 name:'chat',
+                iconCls:'forum',
                 width:680,
                 height:450
             }),
@@ -285,7 +287,7 @@ MyDesktop.WebWindow = Ext.extend(Ext.app.Module, {
     init : function(){
         this.launcher = {
             text: this.name,
-            iconCls:'tabs',
+            iconCls:this.iconCls || 'tabs',
             handler : this.createWindow,
             scope: this
         }
@@ -300,7 +302,7 @@ MyDesktop.WebWindow = Ext.extend(Ext.app.Module, {
                 title:this.name,
                 width:this.width || 740,
                 height:this.height || 480,
-                iconCls: 'tabs',
+                iconCls: this.iconCls || 'tabs',
                 shim:false,
                 animCollapse:false,
                 constrainHeader:true,
