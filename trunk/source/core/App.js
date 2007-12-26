@@ -75,6 +75,10 @@ Ext.extend(Ext.app.App, Ext.util.Observable, {
 			this.initStartMenu(o.startmenu);
 	        this.initQuickStart(o.quickstart);
 	        this.initStyles(o.styles);
+	        
+	        //liuliming--toolbar start button
+	        //this.desktop.lmtaskbar.initDesktopConfig(this.desktopConfig);
+	        //end of liuliming
 		}
     },
     
