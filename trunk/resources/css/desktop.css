@@ -42,11 +42,11 @@ html, body {
 }
 
 .logout {
-	background-image: url(../images/default/icons/logout.png) !important;
+	background-image: url(../images/default/icons/logout.gif) !important;
 }
 
-.settings {
-	background-image: url(../images/default/icons/gears.png) !important;
+.icon-pref {
+	background-image: url(../images/default/icons/gears.gif) !important;
 }
 
 #dpanels {
@@ -295,6 +295,10 @@ html, body {
 }
 .tabs {
     background-image:url(../images/default/icons/tabs.gif) !important;
+}
+.browser {
+	
+	 background-image:url(../images/default/icons/world_link.gif) !important;
 }
 
 .chat {
@@ -611,13 +615,19 @@ td.ux-taskButtons-edge {
 }
 
 .ux-start-menu-tools-panel ul.x-menu-list li.x-menu-list-item a.x-menu-item {
-	color:#ffffff;
-}
-
-.ux-start-menu-tools-panel ul.x-menu-list li.x-menu-list-item .x-menu-item-active a.x-menu-item {
 	color:#000000;	
 }
 
+.ux-start-menu-tools-panel ul.x-menu-list li.x-menu-list-item .x-menu-item-active a.x-menu-item-active {
+	background: #525456 url( ../images/default/taskbar/tool-item-over.gif ) repeat-x left bottom;
+	border:1px solid #000000;
+	padding: 0;
+}
+.ux-start-menu-tools-panel .x-menu-item-active {
+	background: #525456 url( ../images/default/taskbar/tool-item-over.gif ) repeat-x left bottom;
+	border:1px solid #000000;
+	padding: 0;
+}
 #ux-taskbar .x-splitbar-h {
 	background:transparent url(../images/default/taskbar/taskbar-split-h.gif) no-repeat 0 0;
 	width:14px;
