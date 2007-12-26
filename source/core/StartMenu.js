@@ -281,7 +281,7 @@ Ext.extend(Ext.ux.StartMenu, Ext.menu.Menu, {
             if(typeof config.checked == "boolean"){ // must be check menu item config?
                 config = new Ext.menu.CheckItem(config);
             }else{
-                config = new Ext.menu.Adapter(this.getToolButton(config), {canActivate:true});
+                config = new Ext.menu.Item(config);//new Ext.menu.Adapter(this.getToolButton(config), {canActivate:true});
             }
         }
         return this.addToolItem(config);

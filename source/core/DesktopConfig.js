@@ -15,11 +15,12 @@ MyDesktop = new Ext.app.App({
 			new MyDesktop.Docs(),
 			new MyDesktop.GridWindow(),
             new MyDesktop.TabWindow(),
+            new MyDesktop.BrowserWindow (),
             new MyDesktop.WebWindow({
                 id:'forum-win',
                 url:'http://min3.net/forum/index.php',
                 name:'Forum',
-                iconCls:'forum',
+                //iconCls:'forum',
                 width:740,
                 height:480
             }),
@@ -27,7 +28,7 @@ MyDesktop = new Ext.app.App({
                 id:'chat-win',
                 url:'http://shadowpuppet.net/irc/jsDesk.php?nick='+nick+'&name='+name,
                 name:'Chat',
-                iconCls:'chat',
+                //iconCls:'chat',
                 width:680,
                 height:450
             }),
@@ -49,7 +50,7 @@ MyDesktop = new Ext.app.App({
             title: get_cookie('memberName') || 'jsDesk',
             toolItems: [
             	pref.launcher
-            ,{
+            ,'-',{
 				text:'Logout',
 				iconCls:'logout',
 				handler:function(){ window.location = "logout.php"; },
@@ -275,6 +276,70 @@ MyDesktop.TabWindow = Ext.extend(Ext.app.Module, {
                         }]
                     })
             });
+        }
+        win.show();
+    }
+});
+
+
+MyDesktop.BrowserWindow = Ext.extend(Ext.app.Module, {
+    id:'browser-win',
+    appType : 'browser',
+    init : function(){
+        this.launcher = {
+            text: 'lmBrowser',
+            iconCls:'browser',
+            handler : this.createWindow,
+            scope: this
+        }
+    },
+
+    createWindow : function(){
+        var desktop = this.app.getDesktop();
+        var win = desktop.getWindow('browser-win');
+        if(!win){
+        	var inputArea = new Ext.form.TriggerField({width:400,});
+        	inputArea.onTriggerClick = function()
+        	{
+        		log.debug('trigger click');
+        		var inputstring = inputArea.getValue();
+        		Ext.getCmp('reports').iframe.setSrc(inputstring);
+        		//win.getComponent("if3").load("http://www.baidu.com");
+        	}
+            win = desktop.createWindow({
+                id: 'browser-win',
+                title:'lmBrowser',
+                width:740,
+                height:350,
+                iconCls: 'browser',
+                shim:false,
+                animCollapse:false,
+                border:false,
+                constrainHeader:true,
+
+                layout: 'fit',
+                items:[inputArea,{
+				        xtype:'tabpanel',
+				        deferredRender:false,
+				        defaults:{autoScroll: true,height:335,},
+				        defaultType:"iframepanel",
+				        activeTab:0,
+				        items:[{  title:"Yahoo",
+				                  id:'yahoo',
+				                  defaultSrc:'http://www.baidu.com/'
+				               },{
+		                   title:"Google",
+		                   id:'google', 
+		                   defaultSrc: 'http://www.google.com/'
+		               },{
+		                   title:"Customers",
+		                   id:'reports'
+		               }]
+          			}]
+            });
+            log.debug('not click');
+            
+        	Ext.getCmp('reports').iframe.setSrc('http://www.baidu.com');
         }
         win.show();
     }
