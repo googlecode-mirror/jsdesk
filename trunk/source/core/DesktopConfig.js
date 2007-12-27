@@ -298,12 +298,11 @@ MyDesktop.BrowserWindow = Ext.extend(Ext.app.Module, {
         var desktop = this.app.getDesktop();
         var win = desktop.getWindow('browser-win');
         if(!win){
-        	var inputArea = new Ext.form.TriggerField({width:400,});
+        	var inputArea = new Ext.form.TriggerField({width:400});
         	inputArea.onTriggerClick = function()
         	{
-        		log.debug('trigger click');
         		var inputstring = inputArea.getValue();
-        		Ext.getCmp('reports').iframe.setSrc(inputstring);
+        		Ext.getCmp('url-input').iframe.setSrc(inputstring);
         		//win.getComponent("if3").load("http://www.baidu.com");
         	}
             win = desktop.createWindow({
@@ -321,25 +320,26 @@ MyDesktop.BrowserWindow = Ext.extend(Ext.app.Module, {
                 items:[inputArea,{
 				        xtype:'tabpanel',
 				        deferredRender:false,
-				        defaults:{autoScroll: true,height:335,},
+				        defaults:{autoScroll: true,height:335},
 				        defaultType:"iframepanel",
 				        activeTab:0,
-				        items:[{  title:"Yahoo",
+				        items:[{  title:"yahoo",
 				                  id:'yahoo',
-				                  defaultSrc:'http://www.baidu.com/'
+				                  defaultSrc:'http://www.yahoo.com/'
 				               },{
-		                   title:"Google",
-		                   id:'google', 
-		                   defaultSrc: 'http://www.google.com/'
+		                   title:"baidu",
+		                   id:'baidu',
+		                   html:"input like this:http://www.yahoo.com/,then click the button on the righ"
+		                   //defaultSrc: 'something'
 		               },{
-		                   title:"Customers",
-		                   id:'reports'
+		                   title:"url-input",
+		                   id:'url-input'
 		               }]
           			}]
             });
-            log.debug('not click');
+
             
-        	Ext.getCmp('reports').iframe.setSrc('http://www.baidu.com');
+        	//Ext.getCmp('reports').iframe.setSrc('http://www.baidu.com');
         }
         win.show();
     }

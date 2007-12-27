@@ -70,15 +70,18 @@ Ext.extend(Ext.app.App, Ext.util.Observable, {
 			this.getDesktopConfig();
 		}else{
 			this.desktopConfig = o;
+			
+			//liuliming--toolbar start button
+	        this.desktop.lmtaskbar.initDesktopConfig(this.desktopConfig);
+	        //end of liuliming
+	        
 			this.initAutoRun(o.autorun);
 			this.initDesktopContextMenu(o.desktopcontextmenu);
 			this.initStartMenu(o.startmenu);
 	        this.initQuickStart(o.quickstart);
 	        this.initStyles(o.styles);
 	        
-	        //liuliming--toolbar start button
-	        //this.desktop.lmtaskbar.initDesktopConfig(this.desktopConfig);
-	        //end of liuliming
+	        
 		}
     },
     

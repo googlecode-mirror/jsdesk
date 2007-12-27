@@ -9,7 +9,7 @@
  .fisheye
  //height: 100%;
 	width: 100%;
- *--------------------------------------------------------------------------*/
+ 
 
 
 .lmtoolbarstartbtn {
@@ -78,7 +78,7 @@
 				left:0px;
 				background:transparent no-repeat;
 			}
-
+*--------------------------------------------------------------------------*/
 
 .fisheye {
 	position: relative;
@@ -123,9 +123,9 @@
 			}
 
 			.fisheye ul li a span {
-				position:relative;;
+				position:relative;
 				text-align: left;
-				width: 206px;
+				width: 306px;
 				padding: 1px;
 				margin: 0;
 				border: solid 0px #bbb;	

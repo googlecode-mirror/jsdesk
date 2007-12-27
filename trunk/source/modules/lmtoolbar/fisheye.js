@@ -165,13 +165,14 @@ Ext.ux.Fisheye.prototype = {
 		for (var i=0, len=this.items.length; i<len; i++) {
 			var item = this.items[i];
 
-			this.setPos(item, xPos, item.style.top);//item.newTop );
+			this.setPos(item, xPos, 0);//item.newTop);//this.top);//item.style.top);//item.newTop );
 			this.setSize(item, item.newSize, item.newSize);
 
 			var x = Ext.query("span", item.parentNode);
 			if (item.sizeFactor > this.labelTresholdFactor) {
 				this.setPos(x[0], xPos,  item.newSize);
 				x[0].style.display = "block";
+				x[0].style.left=-60;
 			} else {
 				x[0].style.display = "none";
 			}

@@ -25,14 +25,15 @@ Ext.ux.lmfisheyetoolbar = function(app){
         renderTo:Ext.get('toolbar2'),//Ext.get('toolbar2'),
         width:524,
         plain:true,
-        height:64,
-        
+        height:66,
+        //minimizable: true,
         html: '<ul id="ux-lmtaskbutton-strip"><ul>'//<li><a href="#1"><img src="./source/modules/lmtoolbar/images/history.png" alt="History"/><span>History</span></a></li><li><a href="#2"><img src="./source/modules/lmtoolbar/images/users.png" alt="Users"/><span>Users</span></a></li><li><a href="#3"><img src="./source/modules/lmtoolbar/images/graphs.png" alt="Graphs"/><span>Graphs</span></a></li><li><a href="#4"><img src="./source/modules/lmtoolbar/images/help.png" alt="Help"/><span>Help</span></a></li></ul>',
 
     });
+    var barwindow = this.barwindow;
     this.startMenu = new Ext.menu.Menu(Ext.apply({//StartMenu
 			//iconCls: 'user',
-			height: 300,
+			//height: 300,
 			shadow: true,
 			title: 'Start lm', //get_cookie('memberName'),
 			width: 300
@@ -46,17 +47,17 @@ Ext.ux.lmfisheyetoolbar = function(app){
                 //checkHandler: onItemCheck
                 cls:'ux-lmtaskbutton',
                 height:48,
-                width:48,
+                width:48
             },
             {
                 text: 'Ext for jQuery',
                 checked: true,
-                 cls:'ux-lmtaskbutton',
+                 cls:'ux-lmtaskbutton'
                 //checkHandler: onItemCheck
             },
             {
                 text: 'I donated!',
-                checked:false,
+                checked:false
                 //checkHandler: onItemCheck
             }, '-', {
                 text: 'Radio Options',
@@ -67,22 +68,22 @@ Ext.ux.lmfisheyetoolbar = function(app){
                         {
                             text: 'Aero Glass',
                             checked: true,
-                            group: 'theme',
+                            group: 'theme'
                             //checkHandler: onItemCheck
                         }, {
                             text: 'Vista Black',
                             checked: false,
-                            group: 'theme',
+                            group: 'theme'
                             //checkHandler: onItemCheck
                         }, {
                             text: 'Gray Theme',
                             checked: false,
-                            group: 'theme',
+                            group: 'theme'
                             //checkHandler: onItemCheck
                         }, {
                             text: 'Default Theme',
                             checked: false,
-                            group: 'theme',
+                            group: 'theme'
                             //checkHandler: onItemCheck
                         }
                     ]
@@ -94,24 +95,24 @@ Ext.ux.lmfisheyetoolbar = function(app){
     
     this.menuel = Ext.get("ux-lmtaskbutton-strip");
     this.items = [];
-    this.barwindow.setPosition(300,0);
-    this.barwindow.show();
+    //barwindow.setHeight(0);
+    barwindow.setPosition(300,0);
+    barwindow.show();
     this.fishmenues = null;
     
-
-    this.barwindow.buttonactions = 0;
+    //this.testmenu.onClick = function(){ log.debug("enable fish");this.barwindow.enableFisheye = true;};
+	barwindow.enableFisheye = true;
+    barwindow.buttonactions = 0;
  	
-    this.barwindow.onmove = function (  el,  x,  y )
+    this.barwinonmove = function (  el,  x,  y )
     {
-    	if( this.testmenu.isVisible() )
-    		return;
-    	else
-    	if( this.fishmenues )
-    		this.fishmenues.refreshloc(x,y);
+    	if( barwindow.enableFisheye )
+    		if( this.fishmenues )
+    			this.fishmenues.refreshloc(x,y);
     }
     
-    this.barwindow.on({
-    'move' : this.barwindow.onmove,
+    barwindow.on({
+    'move' : this.barwinonmove,
      scope: this
 	});
 	
@@ -135,7 +136,7 @@ Ext.ux.lmfisheyetoolbar = function(app){
 		return li;//btn;
 		
 	};
-	//this.addMenu(this.testmenu);
+	this.addMenu(this.testmenu);
     
 	this.addTaskButton = function(win){
     	//this.tbPanel.ResizeElementsFisheye();
@@ -250,7 +251,6 @@ Ext.ux.lmfisheyetoolbar = function(app){
 };
 
 	this.initStartMenu = function(mIds){
-		log.debug("initStartMenu");
     	if(mIds){	        
 	        for(var i = 0, iLen = mIds.length; i < iLen; i++){
 				var m = this.app.getModule(mIds[i]);
@@ -283,11 +283,10 @@ Ext.ux.lmfisheyetoolbar = function(app){
     
     this.addItems = function(menu, m){ // recursive function, allows sub menus
 			if(m.launcher){
-				log.debug("menu.add");
 				//menu.add(m.launcher);
 				var item  =this.testmenu.add(m.launcher);
 				//item.on('click', m.launcher);
-			}	
+			};	
 			if(m.appType == 'menu'){
 				var items = m.items;
 				for(var j = 0, jLen = items.length; j < jLen; j++){
@@ -298,8 +297,7 @@ Ext.ux.lmfisheyetoolbar = function(app){
 					}
 				}
 				return;
-			}
-				
+			};
 		};
 
 }
@@ -338,7 +336,8 @@ Ext.extend(Ext.ux.lmfisheyetoolbar.menu, Ext.Component, {
 	onClick:function()
 	{
         //this.menuinstance.fireEvent("click");
-		this.menuinstance.showAt(Ext.get(el).getXY());
+		this.menuinstance.showAt([Ext.get(el).getLeft(),Ext.get(el).getBottom()]);//Ext.get(el).getXY());
+		this.container.enableFisheye = false;
 	}
 });
 
