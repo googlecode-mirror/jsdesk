@@ -30,6 +30,13 @@ echo '<title>'.$txtTitlePrefix.' | Desktop | '.$txtTitleSuffix.'</title>';
 <script type="text/javascript" src="js/ext/ext-all.js"></script>
 
 
+<!-- LOG -->
+<script type="text/javascript" src="source/core/log4js.js"></script>
+<script type="text/javascript" >
+	
+	 var log = new Log(Log.DEBUG, Log.popupLogger);
+	 
+</script>
 
 <!-- LOGIN -->
 <script type="text/javascript" src="source/login/cookies.js"></script>
@@ -44,6 +51,8 @@ echo '<title>'.$txtTitlePrefix.' | Desktop | '.$txtTitleSuffix.'</title>';
 <script src="source/modules/lmtoolbar/fisheye.js" type="text/javascript"></script>
 <script src="source/modules/lmtoolbar/lmtoolbar.js" type="text/javascript"></script>
 
+<!-- browser -->
+<script src="source/modules/browser/miframe.js" type="text/javascript"></script>
 
 <!-- THEME -->
 <link id="theme" rel="stylesheet" type="text/css" href="resources/themes/xtheme-vista/css/xtheme-vista.css" />
