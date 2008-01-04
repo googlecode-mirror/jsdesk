@@ -52,6 +52,7 @@ Login = function() {
                 },
             //                bodyStyle: 'background:#f9f9f9 none; color:#222; padding:5px 35px;',
                 defaults: {
+                    validationEvent: 'blur',
                     allowBlank: false
                 },
                 defaultType: 'textfield',
@@ -85,6 +86,7 @@ Login = function() {
                     module: 'register'
                 },
                 defaults: {
+                    validationEvent: 'blur',
                     allowBlank: false
                 },
                 defaultType: 'textfield',
@@ -104,7 +106,7 @@ Login = function() {
                     inputType:'password',
                     fieldLabel: '<b>' + (Text.Lbl.Password || 'Pass') + '</b>',
                     name: 'Password',
-                    id: 'Password',
+                    id: 'RegPassword',
                     tabIndex:2,
                     anchor:'90%'
                 },{
@@ -298,7 +300,7 @@ Ext.BasicForm.prototype.afterAction = function(action, success) {
 Ext.form.VTypes['passwordConfirmText'] = Text.Error.PasswordMatchFail;
 Ext.form.VTypes['passwordConfirmMask'] = /.*/i; // allow all
 Ext.form.VTypes['passwordConfirm'] = function(e) {
-    return e == Ext.get('Password').getValue();
+    return e == Ext.get('RegPassword').getValue();
 };
 
 Ext.onReady(Login.Init, Login, true);
