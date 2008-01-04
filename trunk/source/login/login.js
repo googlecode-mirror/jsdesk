@@ -171,8 +171,8 @@ Login = function() {
                     btnRegister.show();
 
                     form = registerPanel.getForm();
-                    form.findField('UserName').setValue(u);
-                    form.findField('Password').setValue(p);
+                    if(u!='')form.findField('UserName').setValue(u);
+                    if(p!='')form.findField('Password').setValue(p);
 
                     dialog.setHeight(240);
                     dialog.center();
