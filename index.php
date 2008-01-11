@@ -120,10 +120,7 @@ if(!class_exists('desktop')) {
         </dt>
 		
     </dl>
-	<dl id="x-toolbars">
-		<dt id="toolbar2">
-	          
-	    </dt>
+	<dl id="lmtoolbar">
 	</dl>
 </div>
 <div id="ux-taskbar">
