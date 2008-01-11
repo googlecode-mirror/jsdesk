@@ -78,7 +78,67 @@
 				left:0px;
 				background:transparent no-repeat;
 			}
+			
+.x-tool{overflow:hidden;width:15px;height:15px;float:right;cursor:pointer;background:transparent url(../images/default/panel/tool-sprites.gif) no-repeat;margin-left:2px;}
+.x-tool-toggle{background-position:0 -60px;}
+.x-tool-toggle-over{background-position:-15px -60px;}
+.x-panel-collapsed .x-tool-toggle{background-position:0 -75px;}
+.x-panel-collapsed .x-tool-toggle-over{background-position:-15px -75px;}
+.x-tool-close{background-position:0 -0;}
+.x-tool-close-over{background-position:-15px 0;}
+.x-tool-minimize{background-position:0 -15px;}
+.x-tool-minimize-over{background-position:-15px -15px;}
+.x-tool-maximize{background-position:0 -30px;}
+.x-tool-maximize-over{background-position:-15px -30px;}
+.x-tool-restore{background-position:0 -45px;}
+.x-tool-restore-over{background-position:-15px -45px;}
+.x-tool-gear{background-position:0 -90px;}
+.x-tool-gear-over{background-position:-15px -90px;}
+.x-tool-pin{background-position:0 -135px;}
+.x-tool-pin-over{background-position:-15px -135px;}
+.x-tool-unpin{background-position:0 -150px;}
+.x-tool-unpin-over{background-position:-15px -150px;}
+.x-tool-right{background-position:0 -165px;}
+.x-tool-right-over{background-position:-15px -165px;}
+.x-tool-left{background-position:0 -180px;}
+.x-tool-left-over{background-position:-15px -180px;}
+.x-tool-up{background-position:0 -210px;}
+.x-tool-up-over{background-position:-15px -210px;}
+.x-tool-down{background-position:0 -195px;}
+.x-tool-down-over{background-position:-15px -195px;}
+.x-tool-refresh{background-position:0 -225px;}
+.x-tool-refresh-over{background-position:-15px -225px;}
+.x-tool-minus{background-position:0 -255px;}
+.x-tool-minus-over{background-position:-15px -255px;}
+.x-tool-plus{background-position:0 -240px;}
+.x-tool-plus-over{background-position:-15px -240px;}
+.x-tool-search{background-position:0 -270px;}
+.x-tool-search-over{background-position:-15px -270px;}
+.x-tool-save{background-position:0 -285px;}
+.x-tool-save-over{background-position:-15px -285px;}
+.x-tool-help{background-position:0 -300px;}
+.x-tool-help-over{background-position:-15px -300px;}
 *--------------------------------------------------------------------------*/
+#lm-tool-container
+{
+	left:0;
+	height:15px;
+}
+#lm-opend-app-container
+{
+	left:0;
+	height:15px;
+}
+#lm-menu-container
+{
+	left:0;
+}
+
+#lm-tool-window
+{
+	left:0;
+	top:0;
+}
 
 .fisheye {
 	position: relative;
@@ -86,7 +146,7 @@
 	
 	border: 0px ;
 	padding: 0;
-	
+	left:0;
 	background:transparent;
 }
 
@@ -102,7 +162,7 @@
 			position: absolute;
 			display: block;
 			float: left;
-			top: 5px; 
+			top: 0px; 
 			left: 0;
 			right: 0;
 			margin-left: 0;
@@ -130,7 +190,7 @@
 				margin: 0;
 				border: solid 0px #bbb;	
 				
-				left:-60px;
+				left:0px;
 				background:transparent;
 				font-weight:bold;
 				font-size:large;
@@ -160,6 +220,19 @@
 
 .x-lmtoolbar-window-maximized .x-window-bc {
 	height:0;
+	background:transparent;
+}
+
+
+.x-lmtoolbar-window {
+	left:0px;
+}
+
+.x-lmtoolbar-window-body {
+	border:0px solid #222;
+	background:transparent;
+	padding: 0px;
+	margin: 0;
 	background:transparent;
 }
 
@@ -242,13 +315,7 @@
 	border:0px solid #d0dce3;
 	background:transparent;
 }
-.x-lmtoolbar-window-body {
-	border:0px solid #222;
-	background:transparent;
-	padding: 0px;
-	margin: 0;
-	background:transparent;
-}
+
 
 .x-lmtoolbar-window-maximized .x-lmtoolbar-window-mc {
 	border-bottom:0 none !important;
