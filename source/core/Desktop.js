@@ -43,9 +43,9 @@ Ext.Desktop = function(app){
         Ext.fly(win.taskButton.el).addClass('active-win');
         win.minimized = false;
         
-        //liuliming--fisheyetoolbar
-        lmtaskbar.setActiveButton(win.lmtaskButton);
-        Ext.fly(win.lmtaskButton).addClass('active-win');
+        //liuliming--fisheyetoolbar,if you want lmtoolbar add a task button dynamically, uncomment following lines
+        //lmtaskbar.setActiveButton(win.lmtaskButton);
+        //Ext.fly(win.lmtaskButton).addClass('active-win');
         //end of liuliming
     }
 
@@ -54,8 +54,8 @@ Ext.Desktop = function(app){
             activeWindow = null;
             Ext.fly(win.taskButton.el).removeClass('active-win');
         
-             //liuliming--fisheyetoolbar
-            Ext.fly(win.lmtaskButton).removeClass('active-win');
+             //liuliming--fisheyetoolbar,if you want lmtoolbar add a task button dynamically, uncomment following lines
+            //Ext.fly(win.lmtaskButton).removeClass('active-win');
             //end of liuliming 
         }
     }
@@ -63,8 +63,8 @@ Ext.Desktop = function(app){
     function removeWin(win){
     	taskbar.removeTaskButton(win.taskButton);
     	
-    	//liuliming--fisheyetoolbar
-        lmtaskbar.removeTaskButton(win.lmtaskButton);
+    	  //liuliming--fisheyetoolbar,if you want lmtoolbar add a task button dynamically, uncomment following lines
+        //lmtaskbar.removeTaskButton(win.lmtaskButton);
         //end of liuliming
         
         layout();
@@ -88,8 +88,8 @@ Ext.Desktop = function(app){
         win.render(desktopEl);
         win.taskButton = taskbar.addTaskButton(win);
 
-         //liuliming--fisheyetoolbar
-        win.lmtaskButton = lmtaskbar.addTaskButton(win);
+         //liuliming--fisheyetoolbar, if you want lmtoolbar add a task button dynamically, uncomment next line
+        //win.lmtaskButton = lmtaskbar.addTaskButton(win);
         //end of liuliming
         
         win.cmenu = new Ext.menu.Menu({
