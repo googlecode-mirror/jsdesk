@@ -2,6 +2,7 @@ Ext.namespace("Ext.ux");
 /**
  * @class Ext.ux.lmfisheyetoolbar
  * @extends none
+ * @author liuliming2008@126.com
  */
 
 Ext.ux.lmfisheyetoolbar = function(app){
@@ -22,8 +23,8 @@ Ext.ux.lmfisheyetoolbar = function(app){
         collapsible:true,
 	    floating:true,
 	    draggable:true,
-        renderTo:Ext.get('toolbar2'),//Ext.get('toolbar2'),
-        width:524,
+        renderTo:Ext.get('lmtoolbar'),//Ext.get('toolbar2'),
+        width:724,
         plain:true,
         height:66,
         //minimizable: true,
@@ -96,7 +97,7 @@ Ext.ux.lmfisheyetoolbar = function(app){
     this.menuel = Ext.get("ux-lmtaskbutton-strip");
     this.items = [];
     //barwindow.setHeight(0);
-    barwindow.setPosition(300,0);
+    barwindow.setPosition(200,0);
     barwindow.show();
     this.fishmenues = null;
     
@@ -137,7 +138,38 @@ Ext.ux.lmfisheyetoolbar = function(app){
 		
 	};
 	this.addMenu(this.testmenu);
-    
+  
+  this.addQsButton = function(mod){
+    	//this.tbPanel.ResizeElementsFisheye();
+		this.barwindow.buttonactions++;
+		
+		var li = this.menuel.createChild({tag:'li'}, this.edge); // insert before the edge
+
+        li.btn = new Ext.ux.lmfisheyetoolbar.lmQsButton(mod, li,this.barwindow);
+		this.items.push(li);
+		if(!this.fishmenues)
+			this.fishmenues = new Ext.ux.Fisheye("ux-lmtaskbutton-strip",this.barwindow);
+		else
+			this.fishmenues.refreshitems();
+
+		//this.setActiveButton(btn);
+		return li;//btn;
+		
+	} 
+  this.removeQsButton = function(btn){
+		btn.remove();
+		
+		var s = [];
+		for(var i = 0, len = this.items.length; i < len; i++) {
+			if(this.items[i] != btn){
+				s.push(this.items[i]);
+			}
+		}
+		this.items = s;
+		
+		this.fishmenues.refreshitems();
+		//this.delegateUpdates();
+	} 
 	this.addTaskButton = function(win){
     	//this.tbPanel.ResizeElementsFisheye();
 		this.barwindow.buttonactions++;
@@ -282,11 +314,11 @@ Ext.ux.lmfisheyetoolbar = function(app){
     };
     
     this.addItems = function(menu, m){ // recursive function, allows sub menus
-			if(m.launcher){
-				//menu.add(m.launcher);
-				var item  =this.testmenu.add(m.launcher);
-				//item.on('click', m.launcher);
-			};	
+    
+      // add modules to the first button: menu
+			//if(m.launcher){
+      //  menu.add(m.launcher);
+		
 			if(m.appType == 'menu'){
 				var items = m.items;
 				for(var j = 0, jLen = items.length; j < jLen; j++){
@@ -297,8 +329,18 @@ Ext.ux.lmfisheyetoolbar = function(app){
 					}
 				}
 				return;
-			};
-		};
+			}
+      else
+      {
+        //if(m.launcher){
+        this.addQsButton(m);
+				//menu.add(m.launcher);
+				//var item  =this.testmenu.add(m.launcher);
+				//item.on('click', m.launcher);
+				
+			
+      }
+		}
 
 }
 
@@ -371,6 +413,7 @@ Ext.extend(Ext.ux.lmfisheyetoolbar.lmTaskButton, Ext.Component, {
 	},
 	onClick:function()
 	{
+	      //for task item
         if(this.win.minimized || this.win.hidden){
             this.win.show();
         }else if(this.win == this.win.manager.getActive()){
@@ -378,5 +421,43 @@ Ext.extend(Ext.ux.lmfisheyetoolbar.lmTaskButton, Ext.Component, {
         }else{
             this.win.toFront();
         }
+	}
+});
+
+
+Ext.ux.lmfisheyetoolbar.lmQsButton = function(mod, el, cont){
+	this.mod = mod;
+	this.container = cont;
+	this.el = el;
+
+    //Ext.get(el).appendChild();
+	
+	
+	var htmlinsert = '<img id="lmimg" src="'+'./source/modules/lmtoolbar/images/'+mod.id+'.png" alt="test"/></img><span>'+Ext.util.Format.ellipsis(mod.id, 12)+"</span>";
+
+    Ext.get(el).createChild({tag:'a',html:htmlinsert});
+    //Ext.get(el).insertHtml("afterBegin",htmlinsert,true);
+
+    
+	this.init();
+};
+
+Ext.extend(Ext.ux.lmfisheyetoolbar.lmQsButton, Ext.Component, {
+	
+	init:function()
+	{
+		Ext.get(this.el).on({
+			'click': this.onClick,
+	        scope: this,
+	        delay: 100
+	    	
+	    });
+	},
+	onClick:function()
+	{
+	       //for quick start
+	       this.mod.createWindow();
+	       //end of quick start
+	      
 	}
 });
