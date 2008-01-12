@@ -298,7 +298,7 @@ MyDesktop.BrowserWindow = Ext.extend(Ext.app.Module, {
         var desktop = this.app.getDesktop();
         var win = desktop.getWindow('browser-win');
         if(!win){
-        	var inputArea = new Ext.form.TriggerField({width:400});
+        	var inputArea = new Ext.form.TriggerField({id:'browserinput',width:400});
         	inputArea.onTriggerClick = function()
         	{
         		var inputstring = inputArea.getValue();
@@ -319,8 +319,10 @@ MyDesktop.BrowserWindow = Ext.extend(Ext.app.Module, {
                 layout: 'fit',
                 items:[inputArea,{
 				        xtype:'tabpanel',
+				        id:'browserpanel',
+				        height:330,
 				        deferredRender:false,
-				        defaults:{autoScroll: true,height:335},
+				        defaults:{autoScroll: true,height:310},//,autoHeight:true},
 				        defaultType:"iframepanel",
 				        activeTab:0,
 				        items:[{  title:"yahoo",
@@ -335,10 +337,24 @@ MyDesktop.BrowserWindow = Ext.extend(Ext.app.Module, {
 		                   title:"url-input",
 		                   id:'url-input'
 		               }]
-          			}]
+          			}
+          			]
             });
-
-            
+            this.resizehand  =  function(el, width, height ){  
+            log.debug('resized'+width+'h:'+height);
+            Ext.getCmp('browserpanel').getEl().setSize( width, height);
+            Ext.getCmp('yahoo').getEl().setSize( width-10, height-35);//boarder.width  browserinput.height
+            Ext.getCmp('yahoo').getEl().findParentNode('',1,true).setSize( width -10, height-35);
+            Ext.getCmp('yahoo').getEl().findParentNode('',1,true).findParentNode('',1,true).setSize( width - 10, height - 35);
+            Ext.getCmp('yahoo').getEl().first('',false).setSize( width -10, height-35);
+            Ext.getCmp('yahoo').getEl().first('',false).first('',false).setSize( width -10, height-35);
+            };
+            win.on({
+                'resize' :this.resizehand,
+                 scope: this
+            	});
+    
+            //Ext.getCmp('url-input')
         	//Ext.getCmp('reports').iframe.setSrc('http://www.baidu.com');
         }
         win.show();
