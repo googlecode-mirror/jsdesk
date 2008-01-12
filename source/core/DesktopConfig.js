@@ -343,11 +343,11 @@ MyDesktop.BrowserWindow = Ext.extend(Ext.app.Module, {
             this.resizehand  =  function(el, width, height ){  
             log.debug('resized'+width+'h:'+height);
             Ext.getCmp('browserpanel').getEl().setSize( width, height);
-            Ext.getCmp('yahoo').getEl().setSize( width-10, height-35);//boarder.width  browserinput.height
-            Ext.getCmp('yahoo').getEl().findParentNode('',1,true).setSize( width -10, height-35);
-            Ext.getCmp('yahoo').getEl().findParentNode('',1,true).findParentNode('',1,true).setSize( width - 10, height - 35);
-            Ext.getCmp('yahoo').getEl().first('',false).setSize( width -10, height-35);
-            Ext.getCmp('yahoo').getEl().first('',false).first('',false).setSize( width -10, height-35);
+            Ext.getCmp('yahoo').getEl().setSize( width-10, height-80);//boarder.width  browserinput.height
+            Ext.getCmp('yahoo').getEl().findParentNode('',1,true).setSize( width -10, height-80);
+            Ext.getCmp('yahoo').getEl().findParentNode('',1,true).findParentNode('',1,true).setSize( width - 10, height - 80);
+            Ext.getCmp('yahoo').getEl().first('',false).setSize( width -10, height-80);
+            Ext.getCmp('yahoo').getEl().first('',false).first('',false).setSize( width -10, height-80);
             };
             win.on({
                 'resize' :this.resizehand,
