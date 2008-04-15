@@ -121,9 +121,10 @@ Ext.ux.lmfisheyetoolbar = function(app){
     	//this.tbPanel.ResizeElementsFisheye();
 		this.barwindow.buttonactions++;
 		
+		if(this.menuel) {
 		var li = this.menuel.createChild({tag:'li'}, this.edge); // insert before the edge
 
-        li.btn = new Ext.ux.lmfisheyetoolbar.menu(menu, li,this.barwindow);
+        		li.btn = new Ext.ux.lmfisheyetoolbar.menu(menu, li,this.barwindow);
 		this.items.push(li);
 		if(!this.fishmenues)
 			this.fishmenues = new Ext.ux.Fisheye("ux-lmtaskbutton-strip",this.barwindow);
@@ -135,6 +136,7 @@ Ext.ux.lmfisheyetoolbar = function(app){
 
 		//this.setActiveButton(btn);
 		return li;//btn;
+		}
 		
 	};
 	this.addMenu(this.testmenu);
@@ -142,7 +144,7 @@ Ext.ux.lmfisheyetoolbar = function(app){
   this.addQsButton = function(mod){
     	//this.tbPanel.ResizeElementsFisheye();
 		this.barwindow.buttonactions++;
-		
+		if(this.menuel) {
 		var li = this.menuel.createChild({tag:'li'}, this.edge); // insert before the edge
 
         li.btn = new Ext.ux.lmfisheyetoolbar.lmQsButton(mod, li,this.barwindow);
@@ -154,7 +156,7 @@ Ext.ux.lmfisheyetoolbar = function(app){
 
 		//this.setActiveButton(btn);
 		return li;//btn;
-		
+		}
 	} 
   this.removeQsButton = function(btn){
 		btn.remove();
@@ -173,8 +175,8 @@ Ext.ux.lmfisheyetoolbar = function(app){
 	this.addTaskButton = function(win){
     	//this.tbPanel.ResizeElementsFisheye();
 		this.barwindow.buttonactions++;
-		
-		var li = this.menuel.createChild({tag:'li'}, this.edge); // insert before the edge
+		if(this.menuel)
+			var li = this.menuel.createChild({tag:'li'}, this.edge); // insert before the edge
 
         li.btn = new Ext.ux.lmfisheyetoolbar.lmTaskButton(win, li,this.barwindow);
 		this.items.push(li);
